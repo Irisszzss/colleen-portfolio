@@ -1,6 +1,7 @@
 import smartStrokeImg from '../assets/Projects/SmartStroke.png';
 import dervifaiImg from '../assets/Projects/Derivifai.png';
 import RootToolImg from '../assets/Projects/RootTool.png';
+import CJ from '../assets/CJ.jpg';
 
 export const PORTFOLIO_DATA = {
   profile: {
@@ -8,8 +9,8 @@ export const PORTFOLIO_DATA = {
     lastName: "P. Jones",
     title: "COLLEEN_IRIS_P_JONES.PROFILE",
     bio: "Engineering high-performance digital interfaces with a focus on system integrity and architectural precision.",
-    avatar: "👾",
-    lvl: "99",
+    avatar: CJ,
+    lvl: "1",
     resumeUrl: "public\\Jones_Colleen_Resume.pdf", 
     cvUrl: "#", // Replace with your actual document path
     briefing: "Welcome to my digital portfolio. Here, you'll find a curated selection of my projects, skills, and educational background. Each section is designed to provide insight into my technical expertise and creative approach to software development. Feel free to explore and connect with me for potential collaborations or opportunities.",
@@ -42,25 +43,43 @@ export const PORTFOLIO_DATA = {
     { name: "PNPM", slug: "pnpm", color: "#F69220", bg: "bg-black" },
   ],
 
+  developerTools: [
+    { name: "VS Code", slug: "vscode", color: "#007ACC", bg: "bg-white" },
+    { name: "Git", slug: "git", color: "#F05032", bg: "bg-white" },
+    { name: "GitHub", slug: "github", color: "#181717", bg: "bg-white" },
+    { name: "PNPM", slug: "pnpm", color: "#F69220", bg: "bg-black" },
+    { name: "Figma", slug: "figma", color: "#F24E1E", bg: "bg-white" },
+    { name: "Canva", slug: "canva", color: "#F24E1E", bg: "bg-white" },
+  ],
+
+  devOpsDeployment: [
+    { name: "Docker", slug: "docker", color: "#2496ED", bg: "bg-white" },
+    { name: "CI/CD", slug: "development", color: "#000000", bg: "bg-white" },
+    { name: "GitHub Actions", slug: "githubactions", color: "#2088FF", bg: "bg-white" },
+    { name: "Firebase", slug: "firebase", color: "#FFCA28", bg: "bg-[#039BE5]" },
+    { name: "Vercel", slug: "vercel", color: "#000000", bg: "bg-white" },
+    { name: "Render", slug: "render", color: "#000000", bg: "bg-white" },
+  ],
+
   projects: [
     { 
       id: 1, 
       title: "SmartStroke", 
-      desc: "Advanced neural diagnostic interface for real-time patient monitoring.",
+      desc: "A handwriting digitization system built on the MERN stack that uses IMU sensors and OpenCV to stream physical notes to a web application in real-time.",
       image: smartStrokeImg,
       url: "https://www.smartstrokee.com/"
     },
     { 
       id: 2, 
       title: "Derivifai", 
-      desc: "Automated derivative analysis engine powered by machine learning protocols.",
+      desc: "An automated engine that utilizes a specialized API to solve and interpret complex derivative differential equations, built using HTML, CSS, and PHP.",
       image: dervifaiImg,
       url: "https://derivifai.app"
     },
     { 
       id: 3, 
       title: "RootTool", 
-      desc: "Low-level system utility for directory visualization and kernel management.",
+      desc: "A numerical methods application built with Java and Java Swing, featuring a custom-engineered UI focused on dynamic matrix operations and data visualization.",
       image: RootToolImg,
       url: "https://github.com/yourusername/roottool",
       downloadUrl: "/RootTool.exe",
@@ -75,6 +94,7 @@ export const PORTFOLIO_DATA = {
     degree: "Computer Engineering", 
     year: "2022-2026",
     eduId: "BSU-COE-2022",
+    progress: 90,
     awards: [
       { id: "A-01", title: "Magna Cum Laude", issuer: "College of Engineering", date: "June 2026" },
       { id: "A-02", title: "Dean's Lister", issuer: "College of Engineering", date: "2023-2026" },

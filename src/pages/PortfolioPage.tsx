@@ -23,7 +23,7 @@ export default function PortfolioPage() {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
   const [selectedDownloadProject, setSelectedDownloadProject] = useState(null);
 
-  const { profile, languages, frameworks, projects, education } = PORTFOLIO_DATA;
+  const { profile, languages, frameworks, developerTools, devOpsDeployment, projects, education } = PORTFOLIO_DATA;
 
   useEffect(() => {
     if (loading || activePage !== 'home') return;
@@ -45,7 +45,6 @@ export default function PortfolioPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Handler for project interactions
   const handleProjectAction = (proj: typeof projects[number]) => {
     if (proj.id === 2) {
       setActivePage('derivifai');
@@ -59,7 +58,6 @@ export default function PortfolioPage() {
 
   if (loading) return <Loader />;
 
-  // CONDITIONAL RENDERING FOR THE GALLERY PAGE
   if (activePage === 'derivifai') {
     return <DerivifaiGallery onBack={() => setActivePage('home')} />;
   }
@@ -87,8 +85,13 @@ export default function PortfolioPage() {
 
             <div className="p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 flex-1 text-left">
               <div className="relative shrink-0">
-                <div className="w-24 h-24 md:w-28 md:h-28 bg-[#D4FCD1] border-2 md:border-4 border-black flex items-center justify-center relative z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-5xl">
-                  {profile.avatar}
+                <div className="w-24 h-24 md:w-28 md:h-28 bg-[#D4FCD1] border-2 md:border-4 border-black flex items-center justify-center relative z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+                  <img
+                    src={profile.avatar}
+                    alt={`${profile.name} ${profile.lastName}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="absolute -bottom-1 -right-1 bg-pink-500 border border-black px-1.5 py-0.5 font-black text-white uppercase text-[10px] z-20 italic">
                   LVL.{profile.lvl}
@@ -150,11 +153,18 @@ export default function PortfolioPage() {
                   <FileText size={14} /> Download Resume
                 </span>
               </a>
-              <a href={profile.cvUrl} target='_blank' className="bg-[#ace66f] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group/btn">
+              <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" className="bg-[#ace66f] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group/btn cursor-not-allowed opacity-70 animate-pulse">
                 <span className="relative z-10 flex items-center justify-center gap-2 italic">
                   <FileText size={14} /> Download CV
                 </span>
               </a>
+              <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-black bg-black px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#A8E6A0] overflow-hidden">
+                <span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02),rgba(255,255,255,0.12))] bg-[length:200%_100%] animate-constructing" />
+                <span className="relative z-10 flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-pink-500 animate-pulse" />
+                  Under Construction
+                </span>
+              </div>
             </div>
           </aside>
 
@@ -235,6 +245,32 @@ export default function PortfolioPage() {
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4">
                 {frameworks.map((item, idx) => (
+                  <div key={idx} className="card-reveal" style={{ transitionDelay: `${idx * 40}ms` }}>
+                    <SkillCard item={item} index={idx} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="pop-reveal reveal-left flex items-center gap-3 mb-6 group">
+                <div className="bg-black text-white text-[10px] font-black w-7 h-7 flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(236,72,153,1)] group-hover:bg-pink-500 transition-colors">03</div>
+                <h4 className="text-sm font-black uppercase tracking-[0.2em] italic">Developer_Tools</h4>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4">
+                {developerTools.map((item, idx) => (
+                  <div key={idx} className="card-reveal" style={{ transitionDelay: `${idx * 40}ms` }}>
+                    <SkillCard item={item} index={idx} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="pop-reveal reveal-left flex items-center gap-3 mb-6 group">
+                <div className="bg-black text-white text-[10px] font-black w-7 h-7 flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(236,72,153,1)] group-hover:bg-pink-500 transition-colors">04</div>
+                <h4 className="text-sm font-black uppercase tracking-[0.2em] italic">DevOps_&_Deployment</h4>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4">
+                {devOpsDeployment.map((item, idx) => (
                   <div key={idx} className="card-reveal" style={{ transitionDelay: `${idx * 40}ms` }}>
                     <SkillCard item={item} index={idx} />
                   </div>

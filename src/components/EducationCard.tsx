@@ -61,10 +61,10 @@ export default function EducationCard({ edu }) {
             <div className="pt-3 sm:pt-4 border-t border-black/10">
               <div className="flex justify-between items-end mb-2 text-[9px] sm:text-[10px] font-black uppercase tracking-tighter">
                 <span>System_Progression</span>
-                <span className="text-pink-600">Status: Completed</span>
+                <span className="text-pink-600">Status: {edu.progress && edu.progress < 100 ? `${edu.progress}% In Progress` : 'Completed'}</span>
               </div>
               <div className="h-3 sm:h-4 bg-black/5 border-2 border-black relative overflow-hidden">
-                <div className="h-full bg-black w-[100%] relative">
+                <div className="h-full bg-black" style={{ width: `${edu.progress ?? 100}%` }}>
                   <div className="absolute inset-0 opacity-20 bg-[linear-gradient(90deg,transparent_0%,#A8E6A0_50%,transparent_100%)] bg-[size:200%_100%] animate-[scan_3s_linear_infinite]" />
                 </div>
               </div>

@@ -25,7 +25,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col leading-none">
               <h1 className="text-[12px] md:text-base font-black tracking-tight text-white whitespace-nowrap">
-                Iriss<span className="text-pink-500">.SYS</span>
+                Irisszzss<span className="text-pink-500">.SYS</span>
               </h1>
               <span className="text-[7px] md:text-[9px] font-black opacity-50 uppercase tracking-[0.1em] mt-0.5">Node_Active</span>
             </div>
