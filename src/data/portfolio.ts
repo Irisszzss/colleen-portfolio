@@ -4,6 +4,7 @@ import RootToolImg from '../assets/Projects/RootTool.png';
 import CJ from '../assets/CJ.jpg';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
+import resume from '../assets/Jones_Colleen_Resume.pdf';
 
 export const PORTFOLIO_DATA = {
   profile: {
@@ -13,7 +14,7 @@ export const PORTFOLIO_DATA = {
     bio: "Engineering high-performance digital interfaces with a focus on system integrity and architectural precision.",
     avatar: CJ,
     lvl: "1",
-    resumeUrl: "public\\Jones_Colleen_Resume.pdf", 
+    resumeUrl: resume, 
     cvUrl: "#", // Replace with your actual document path
     briefing: "Welcome to my digital portfolio. Here, you'll find a curated selection of my projects, skills, and educational background. Each section is designed to provide insight into my technical expertise and creative approach to software development. Feel free to explore and connect with me for potential collaborations or opportunities.",
   },
