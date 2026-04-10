@@ -85,7 +85,7 @@ export default function PortfolioPage() {
               <div className="w-1.5 h-1.5 bg-pink-500 rounded-full animate-pulse" />
             </div>
 
-            <div className="p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 flex-1 text-left">
+            <div className="p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 flex-1 text-left mt-0">
               <div className="relative shrink-0">
                 <div className="w-24 h-24 md:w-28 md:h-28 bg-[#D4FCD1] border-2 md:border-4 border-black flex items-center justify-center relative z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
                   <img
