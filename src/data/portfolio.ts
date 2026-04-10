@@ -1,0 +1,99 @@
+import smartStrokeImg from '../assets/Projects/SmartStroke.png';
+import dervifaiImg from '../assets/Projects/Derivifai.png';
+import RootToolImg from '../assets/Projects/RootTool.png';
+
+export const PORTFOLIO_DATA = {
+  profile: {
+    name: "Colleen Iris",
+    lastName: "P. Jones",
+    title: "COLLEEN_IRIS_P_JONES.PROFILE",
+    bio: "Engineering high-performance digital interfaces with a focus on system integrity and architectural precision.",
+    avatar: "👾",
+    lvl: "99",
+    resumeUrl: "public\\Jones_Colleen_Resume.pdf", 
+    cvUrl: "#", // Replace with your actual document path
+    briefing: "Welcome to my digital portfolio. Here, you'll find a curated selection of my projects, skills, and educational background. Each section is designed to provide insight into my technical expertise and creative approach to software development. Feel free to explore and connect with me for potential collaborations or opportunities.",
+  },
+  
+  languages: [
+    { name: "HTML5", slug: "html5", color: "#E34F26", bg: "bg-white" },
+    { name: "CSS3", slug: "css", color: "#1572B6", bg: "bg-white" },
+    { name: "JavaScript", slug: "javascript", color: "#F7DF1E", bg: "bg-[#323330]" },
+    { name: "TypeScript", slug: "typescript", color: "#3178C6", bg: "bg-white" },
+    { name: "Python", slug: "python", color: "#3776AB", bg: "bg-[#F7F7F7]" },
+    { name: "Java", slug: "openjdk", color: "#ED8B00", bg: "bg-white" },
+    { name: "PHP", slug: "php", color: "#777BB4", bg: "bg-[#050505]" },
+    { name: "C", slug: "c", color: "#A8B9CC", bg: "bg-[#222222]" },
+    { name: "C++", slug: "cplusplus", color: "#00599C", bg: "bg-white" },
+    { name: "Dart", slug: "dart", color: "#0175C2", bg: "bg-white" },
+    { name: "SQL", slug: "sqlite", color: "#003B57", bg: "bg-[#A8E6A0]" },
+  ],
+
+  frameworks: [
+    { name: "React.js", slug: "react", color: "#61DAFB", bg: "bg-[#20232A]" },
+    { name: "Vue.js", slug: "vuedotjs", color: "#4FC08D", bg: "bg-[#35495E]" },
+    { name: "Laravel", slug: "laravel", color: "#FF2D20", bg: "bg-white" },
+    { name: "Node.js", slug: "nodedotjs", color: "#339933", bg: "bg-[#303030]" },
+    { name: "Express.js", slug: "express", color: "#FFFFFF", bg: "bg-black" },
+    { name: "Flutter", slug: "flutter", color: "#02569B", bg: "bg-white" },
+    { name: "Tailwind CSS", slug: "tailwindcss", color: "#06B6D4", bg: "bg-[#0F172A]" },
+    { name: "Firebase", slug: "firebase", color: "#FFCA28", bg: "bg-[#039BE5]" },
+    { name: "MongoDB", slug: "mongodb", color: "#47A248", bg: "bg-white" },
+    { name: "PNPM", slug: "pnpm", color: "#F69220", bg: "bg-black" },
+  ],
+
+  projects: [
+    { 
+      id: 1, 
+      title: "SmartStroke", 
+      desc: "Advanced neural diagnostic interface for real-time patient monitoring.",
+      image: smartStrokeImg,
+      url: "https://www.smartstrokee.com/"
+    },
+    { 
+      id: 2, 
+      title: "Derivifai", 
+      desc: "Automated derivative analysis engine powered by machine learning protocols.",
+      image: dervifaiImg,
+      url: "https://derivifai.app"
+    },
+    { 
+      id: 3, 
+      title: "RootTool", 
+      desc: "Low-level system utility for directory visualization and kernel management.",
+      image: RootToolImg,
+      url: "https://github.com/yourusername/roottool",
+      downloadUrl: "/RootTool.exe",
+      isDownloadable: true 
+    },
+  ],
+
+  education: [
+  { 
+    school: "Bulacan State University", 
+    logo: "src\\assets\\logo\\bulsu-logo.jpg",
+    degree: "Computer Engineering", 
+    year: "2022-2026",
+    eduId: "BSU-COE-2022",
+    awards: [
+      { id: "A-01", title: "Magna Cum Laude", issuer: "College of Engineering", date: "June 2026" },
+      { id: "A-02", title: "Dean's Lister", issuer: "College of Engineering", date: "2023-2026" },
+      { id: "A-03", title: "ICpEP Region III Logic Breadboarding Participant", issuer: "ICpEP.se Region III", date: "March 2026" },
+      { id: "A-04", title: "Huawei - Innovation Track Participant", issuer: "Huawei ICT Academy", date: "November 2025" },
+      { id: "A-05", title: "Huawei - Computing Track Participant", issuer: "Huawei ICT Academy", date: "November 2024" },
+    ]
+  },
+  { 
+    school: "St. Francis de Assisi Montessori School", 
+    logo: "src\\assets\\logo\\sfams-logo.png",
+    degree: "Senior High School (STEM) | Junior High School", 
+    year: "2016-2022",
+    eduId: "SFAMS-STEM-2016",
+    awards: [
+      { id: "A-01", title: "Senior High School - With Honors", issuer: "St. Francis de Assisi Montessori School", date: "May 2022" },
+      { id: "A-02", title: "Senior High School - Best Thesis Presenter", issuer: "St. Francis de Assisi Montessori School", date: "May 2022" },
+      { id: "A-03", title: "Junior High School - With High Honors", issuer: "St. Francis de Assisi Montessori School", date: "March 2020" },
+    ]
+  },
+],
+};
