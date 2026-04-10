@@ -4,7 +4,7 @@ import RootToolImg from '../assets/Projects/RootTool.png';
 import CJ from '../assets/CJ.jpg';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
-import resume from '../assets/Jones_Colleen_Resume.pdf';
+import resume from './Jones_Colleen_Resume.pdf';
 
 export const PORTFOLIO_DATA = {
   profile: {
