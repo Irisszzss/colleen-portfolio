@@ -82,7 +82,7 @@ export default function Loader() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes status {
           0%, 20% { transform: translateY(0); }
           25%, 45% { transform: translateY(-20px); }
