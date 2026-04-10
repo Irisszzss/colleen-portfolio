@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Globe, FileText, Database, Activity, ChevronRight, Download } from 'lucide-react';
 
 import { 
@@ -11,17 +11,19 @@ import {
   ScrollToTop 
 } from '../components';
 
+import { PORTFOLIO_DATA } from '../data/portfolio';
+
+type PortfolioProject = (typeof PORTFOLIO_DATA)['projects'][number];
+
 // Page and Modal Imports
 import DerivifaiGallery from '../pages/DerivifaiGallery'; 
 import DownloadModal from '../components/DownloadModal';
-
-import { PORTFOLIO_DATA } from '../data/portfolio';
 
 export default function PortfolioPage() {
   const [loading, setLoading] = useState(true);
   const [activePage, setActivePage] = useState('home'); 
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
-  const [selectedDownloadProject, setSelectedDownloadProject] = useState(null);
+  const [selectedDownloadProject, setSelectedDownloadProject] = useState<PortfolioProject | null>(null);
 
   const { profile, languages, frameworks, developerTools, devOpsDeployment, projects, education } = PORTFOLIO_DATA;
 

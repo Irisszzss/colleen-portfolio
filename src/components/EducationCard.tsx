@@ -1,8 +1,25 @@
 "use client";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Terminal, ChevronRight, ShieldCheck } from 'lucide-react';
 
-export default function EducationCard({ edu }) {
+type Award = {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+};
+
+type EducationEntry = {
+  eduId: string;
+  school: string;
+  logo?: string;
+  degree: string;
+  year: string;
+  progress?: number;
+  awards?: Award[];
+};
+
+export default function EducationCard({ edu }: { edu: EducationEntry }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -13,7 +30,7 @@ export default function EducationCard({ edu }) {
         <div className="bg-black text-[#A8E6A0] px-3 sm:px-4 py-1.5 flex justify-between items-center border-b-2 border-black text-[8px] sm:text-[9px] font-black uppercase tracking-widest">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-500 rounded-full animate-pulse" />
-            <span className="truncate max-w-[150px] sm:max-w-none">NODE_ID: {edu.eduId}</span>
+            <span className="truncate max-w-37.5 sm:max-w-none">NODE_ID: {edu.eduId}</span>
           </div>
           <span className="hidden xs:block">Verified_Credential</span>
         </div>
@@ -36,7 +53,7 @@ export default function EducationCard({ edu }) {
               ) : (
                 <ShieldCheck size={40} className="text-black relative z-10" />
               )}
-              <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_0)] bg-[size:4px_4px] opacity-10" />
+              <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_0)] bg-size-[4px_4px] opacity-10" />
             </div>
           </div>
 
@@ -65,7 +82,7 @@ export default function EducationCard({ edu }) {
               </div>
               <div className="h-3 sm:h-4 bg-black/5 border-2 border-black relative overflow-hidden">
                 <div className="h-full bg-black" style={{ width: `${edu.progress ?? 100}%` }}>
-                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(90deg,transparent_0%,#A8E6A0_50%,transparent_100%)] bg-[size:200%_100%] animate-[scan_3s_linear_infinite]" />
+                  <div className="absolute inset-0 opacity-20 bg-[linear-gradient(90deg,transparent_0%,#A8E6A0_50%,transparent_100%)] bg-size-[200%_100%] animate-[scan_3s_linear_infinite]" />
                 </div>
               </div>
             </div>
@@ -77,14 +94,14 @@ export default function EducationCard({ edu }) {
       {edu.awards && edu.awards.length > 0 && (
         <div className="mt-4 relative pl-4 sm:pl-6 md:pl-8">
           {/* Connector line - Hidden on very small screens if necessary, or kept for style */}
-          <div className="absolute left-0 top-[-24px] bottom-0 w-[2px] bg-black/20 border-l-2 border-dashed border-black/30 ml-[1px] sm:ml-[2px]" />
+          <div className="absolute left-0 -top-6 bottom-0 w-0.5 bg-black/20 border-l-2 border-dashed border-black/30 ml-px sm:ml-0.5" />
 
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-full flex items-center justify-between bg-black text-[#A8E6A0] px-3 sm:px-4 py-2.5 sm:py-3 border-2 border-black shadow-[3px_3px_0px_0px_rgba(236,72,153,1)] sm:shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all group relative"
           >
             {/* Visual Indicator Line */}
-            <div className="absolute left-[-16px] sm:left-[-24px] md:left-[-32px] top-1/2 w-4 sm:w-6 md:w-8 h-[2px] bg-black/20" />
+            <div className="absolute -left-4 sm:-left-6 md:-left-8 top-1/2 w-4 sm:w-6 md:w-8 h-0.5 bg-black/20" />
             
             <span className="text-[9px] sm:text-[10px] md:text-[11px] font-black uppercase tracking-tight sm:tracking-[0.15em] flex items-center gap-2 sm:gap-3 truncate pr-2">
               <ShieldCheck 
