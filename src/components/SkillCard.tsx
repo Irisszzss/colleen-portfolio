@@ -1,12 +1,19 @@
 "use client";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export default function SkillCard({ item, index }) {
+type SkillCardItem = {
+  name: string;
+  slug: string;
+  color: string;
+  bg: string;
+};
+
+export default function SkillCard({ item, index }: { item: SkillCardItem; index: number }) {
   const [iconError, setIconError] = useState(false);
   const iconUrl = `https://cdn.simpleicons.org/${item.slug}/${item.color.replace('#', '')}`;
   const fallbackText = item.name
     .split(/\s|\//)
-    .map((part) => part[0])
+    .map((part: string) => part[0])
     .filter(Boolean)
     .slice(0, 2)
     .join('')

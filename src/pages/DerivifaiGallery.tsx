@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import { ChevronLeft, ShieldAlert, PlayCircle, ArrowRight } from 'lucide-react';
 
 // --- IMAGE IMPORTS ---
