@@ -157,7 +157,7 @@ export default function PortfolioPage() {
                 rel="noreferrer"
                 className="bg-[#FFFF00] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group/btn"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2 italic pointer-events-none">
+                <span className="relative z-10 flex items-center justify-center gap-2 italic">
                   <FileText size={14} /> Download Resume
                 </span>
               </a>
