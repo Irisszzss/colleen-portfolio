@@ -2,6 +2,8 @@ import smartStrokeImg from '../assets/Projects/SmartStroke.png';
 import dervifaiImg from '../assets/Projects/Derivifai.png';
 import RootToolImg from '../assets/Projects/RootTool.png';
 import CJ from '../assets/CJ.jpg';
+import BSULogo from '../assets/logo/bulsu-logo.jpg';
+import SFAMSLogo from '../assets/logo/sfams-logo.png';
 
 export const PORTFOLIO_DATA = {
   profile: {
@@ -90,7 +92,7 @@ export const PORTFOLIO_DATA = {
   education: [
   { 
     school: "Bulacan State University", 
-    logo: "src\\assets\\logo\\bulsu-logo.jpg",
+    logo: BSULogo,
     degree: "Computer Engineering", 
     year: "2022-2026",
     eduId: "BSU-COE-2022",
@@ -105,7 +107,7 @@ export const PORTFOLIO_DATA = {
   },
   { 
     school: "St. Francis de Assisi Montessori School", 
-    logo: "src\\assets\\logo\\sfams-logo.png",
+    logo: SFAMSLogo,
     degree: "Senior High School (STEM) | Junior High School", 
     year: "2016-2022",
     eduId: "SFAMS-STEM-2016",
