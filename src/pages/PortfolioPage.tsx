@@ -85,15 +85,10 @@ export default function PortfolioPage() {
               <div className="w-1.5 h-1.5 bg-pink-500 rounded-full animate-pulse" />
             </div>
 
-            <div className="p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 flex-1 text-left mt-0">
+            <div className="p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 flex-1 text-left">
               <div className="relative shrink-0">
-                <div className="w-24 h-24 md:w-28 md:h-28 bg-[#D4FCD1] border-2 md:border-4 border-black flex items-center justify-center relative z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-                  <img
-                    src={profile.avatar}
-                    alt={`${profile.name} ${profile.lastName}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <div className="w-24 h-24 md:w-28 md:h-28 bg-[#D4FCD1] border-2 md:border-4 border-black flex items-center justify-center relative z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] text-5xl">
+                  <img src={profile.avatar} alt={profile.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-1 -right-1 bg-pink-500 border border-black px-1.5 py-0.5 font-black text-white uppercase text-[10px] z-20 italic">
                   LVL.{profile.lvl}
@@ -150,29 +145,22 @@ export default function PortfolioPage() {
                   </ul>
                 </div>
               </div>
-              <a
-                href={profile.resumeUrl}
-                download="Jones_Colleen_Resume.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="bg-[#FFFF00] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group/btn"
-              >
+              <a href={profile.resumeUrl} target='_blank' className="bg-[#FFFF00] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group/btn">
                 <span className="relative z-10 flex items-center justify-center gap-2 italic">
                   <FileText size={14} /> Download Resume
                 </span>
               </a>
-              <a href="#" onClick={(e) => e.preventDefault()} aria-disabled="true" className="bg-[#ace66f] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group/btn cursor-not-allowed opacity-70 animate-pulse">
-                <span className="relative z-10 flex items-center justify-center gap-2 italic">
-                  <FileText size={14} /> Download CV
+              <button
+                disabled
+                className="w-full bg-[#ace66f] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase mt-6 relative overflow-visible shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] opacity-70 cursor-not-allowed animate-pulse
+                  after:content-[''] after:absolute after:inset-0 after:z-[-1] after:scale-110"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2 italic pointer-events-none">
+                  <FileText size={14} /> Download CV (Under Construction)
                 </span>
-              </a>
-              <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-black bg-black px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#A8E6A0] overflow-hidden">
-                <span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02),rgba(255,255,255,0.12))] bg-[length:200%_100%] animate-constructing" />
-                <span className="relative z-10 flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-pink-500 animate-pulse" />
-                  Under Construction
-                </span>
-              </div>
+                
+                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(0,0,0,0.05)_10px,rgba(0,0,0,0.05)_20px)] pointer-events-none" />
+              </button>
             </div>
           </aside>
 
