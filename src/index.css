@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  /* --- Register Custom Animations --- */
-  /* In Tailwind v4, we define the animation property as a theme variable */
   --animate-scan: scan 2s linear infinite;
   --animate-load: load 3s ease-in-out forwards;
   --animate-spin-slow: spin-slow 8s linear infinite;
   --animate-marquee: marquee 20s linear infinite;
 
-  /* --- Keyframe Definitions (Standard CSS inside @theme) --- */
   @keyframes scan { 
     from { transform: translateY(-100%); } 
     to { transform: translateY(200%); } 
@@ -35,12 +32,10 @@
   }
 }
 
-/* --- Integrated Global Styles --- */
 
 html { 
   scroll-behavior: smooth; 
-  /* Prevent Fixed Navbar from covering headers */
-  scroll-padding-top: 100px; 
+  scroll-padding-top: 10px; 
 }
 
 body {
