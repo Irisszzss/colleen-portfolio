@@ -13,18 +13,18 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // We only update via scroll if the user isn't clicking a link
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      // Lowering the threshold to 0.3 makes it more responsive on smaller screens
-      { threshold: 0.3, rootMargin: "-10% 0px -70% 0px" } 
-    );
+    const observerOptions = {
+      threshold: 0.2, 
+      rootMargin: "-20% 0px -50% 0px" 
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
 
     navItems.forEach((item) => {
       const el = document.querySelector(item.href);
