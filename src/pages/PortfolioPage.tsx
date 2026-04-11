@@ -41,7 +41,7 @@ export default function PortfolioPage() {
     
     const observerOptions = { 
       threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
+      rootMargin: "0px 0px 0px 0px"
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -151,11 +151,11 @@ export default function PortfolioPage() {
                 <div className="grid grid-cols-2 gap-2 text-[10px] font-black uppercase">
                   <div className="bg-[#FFFFED] p-2 border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex flex-col">
                     <span className="opacity-50 text-[7px] mb-1">Affiliation</span>
-                    <span className="text-[9px]">ICpEP.se R3</span>
+                    <span className="text-[9px]">ICpEP.se R3 Member</span>
                   </div>
                   <div className="bg-black text-white p-2 border border-black flex flex-col">
                     <span className="opacity-50 text-[7px] mb-1">Status</span>
-                    <span className="text-[9px]">Honors_Grad</span>
+                    <span className="text-[9px]">READY_FOR_WORK</span>
                   </div>
                 </div>
                 <div className="space-y-3">

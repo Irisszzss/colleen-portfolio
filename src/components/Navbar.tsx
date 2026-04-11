@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Terminal, Activity } from 'lucide-react';
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about');
+  const observer = useRef<IntersectionObserver | null>(null);
 
   const navItems = [
     { label: 'Profile', href: '#about', id: 'about' },
@@ -13,28 +14,42 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.2, 
-      rootMargin: "-20% 0px -50% 0px" 
+    // 1. Handle Scroll Fallback (Fixes mobile sticking at top)
+    const handleScroll = () => {
+      if (window.scrollY < 100) {
+        setActiveSection('about');
+      }
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
+    // 2. Intersection Observer Logic
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Use a smaller intersection ratio for mobile reliability
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { 
+        // rootMargin ignores the very top/bottom to focus on the center "reading zone"
+        rootMargin: '-20% 0px -40% 0px',
+        threshold: [0.1, 0.5] 
+      }
+    );
 
     navItems.forEach((item) => {
       const el = document.querySelector(item.href);
-      if (el) observer.observe(el);
+      if (el) observer.current?.observe(el);
     });
 
-    return () => observer.disconnect();
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      observer.current?.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  // MANUAL CLICK HANDLER
   const handleClick = (id: string) => {
     setActiveSection(id);
   };
@@ -65,7 +80,7 @@ export default function Navbar() {
                 <a 
                   key={item.id}
                   href={item.href}
-                  onClick={() => handleClick(item.id)} // ADDED THIS
+                  onClick={() => handleClick(item.id)}
                   className={`flex-1 flex items-center justify-center border-r-2 border-black/10 transition-all duration-200 relative group
                     ${isActive ? 'bg-pink-500 text-white' : 'hover:bg-[#A8E6A0] hover:text-[#1D3D2A]'}
                   `}
@@ -96,7 +111,7 @@ export default function Navbar() {
               <a 
                 key={item.id}
                 href={item.href} 
-                onClick={() => handleClick(item.id)} // ADDED THIS
+                onClick={() => handleClick(item.id)}
                 className={`flex-1 text-center py-2 font-black text-[10px] uppercase transition-colors
                   ${isActive ? 'bg-pink-500 text-white' : 'text-[#A8E6A0]'}
                 `}
