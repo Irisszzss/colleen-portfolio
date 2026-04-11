@@ -1,4 +1,4 @@
-import { Terminal, ShieldCheck, Cpu, Globe, Hash } from 'lucide-react';
+import { Terminal, ShieldCheck, Cpu, Globe } from 'lucide-react';
 
 export default function Footer() {
   const socialLinks = [

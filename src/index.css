@@ -1,65 +1,92 @@
 @import "tailwindcss";
 
-@keyframes shimmer {
-  100% { transform: translateX(100%); }
+@theme {
+  /* --- Register Custom Animations --- */
+  /* In Tailwind v4, we define the animation property as a theme variable */
+  --animate-scan: scan 2s linear infinite;
+  --animate-load: load 3s ease-in-out forwards;
+  --animate-spin-slow: spin-slow 8s linear infinite;
+  --animate-marquee: marquee 20s linear infinite;
+
+  /* --- Keyframe Definitions (Standard CSS inside @theme) --- */
+  @keyframes scan { 
+    from { transform: translateY(-100%); } 
+    to { transform: translateY(200%); } 
+  }
+
+  @keyframes load { 
+    from { transform: translateX(-100%); } 
+    to { transform: translateX(0); } 
+  }
+
+  @keyframes spin-slow { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+  }
+
+  @keyframes marquee { 
+    0% { transform: translateX(100%); } 
+    100% { transform: translateX(-100%); } 
+  }
+
+  @keyframes constructing {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
 }
 
 /* --- Integrated Global Styles --- */
 
 html { 
   scroll-behavior: smooth; 
-  scroll-padding-top: 10px; 
+  /* Prevent Fixed Navbar from covering headers */
+  scroll-padding-top: 100px; 
 }
 
-/* Animations & Transitions */
-.pop-reveal, .card-reveal { 
+body {
+  @apply antialiased;
+}
+
+/* --- Reveal System --- */
+/* These classes handle the entry animations for your sections */
+.pop-reveal, 
+.card-reveal { 
   opacity: 0; 
   will-change: transform, opacity; 
-  transition: all 0.7s cubic-bezier(0.17, 0.55, 0.55, 1); 
+  /* Professional Out-Quart easing for a high-end engineering feel */
+  transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), 
+              transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.reveal-left { transform: translateX(-20px); }
-.reveal-right { transform: translateX(20px); }
+/* Entry Directions */
+.reveal-left { transform: translateX(-30px); }
+.reveal-right { transform: translateX(30px); }
 
+/* Default Direction (Up) */
 .pop-reveal:not(.reveal-left):not(.reveal-right), 
 .card-reveal { 
-  transform: translateY(20px); 
+  transform: translateY(30px); 
 }
 
+/* The Active State (Triggered by IntersectionObserver in JS) */
 .reveal-visible { 
   opacity: 1 !important; 
   transform: translate(0, 0) !important; 
 }
 
-/* Keyframe Definitions */
-@keyframes scan { 
-  from { transform: translateY(-100%); } 
-  to { transform: translateY(200%); } 
+/* --- Manual Utility Overrides --- */
+.animate-constructing {
+  background-size: 200% 100%;
+  animation: constructing 2.5s linear infinite;
 }
 
-@keyframes load { 
-  from { transform: translateX(-100%); } 
-  to { transform: translateX(0); } 
+/* Custom Scanline Intensity */
+.scanline-effect {
+  @apply pointer-events-none fixed inset-0 z-50;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 51%
+  );
+  background-size: 100% 4px;
 }
-
-@keyframes spin { 
-  from { transform: rotate(0deg); } 
-  to { transform: rotate(360deg); } 
-}
-
-@keyframes marquee { 
-  0% { transform: translateX(100%); } 
-  100% { transform: translateX(-100%); } 
-}
-
-@keyframes constructing {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-/* Animation Utility Classes */
-.animate-scan { animation: scan 2s linear infinite; }
-.animate-load { animation: load 3s ease-in-out forwards; }
-.animate-spin-slow { animation: spin 8s linear infinite; }
-.animate-marquee { animation: marquee 20s linear infinite; }
-.animate-constructing { animation: constructing 2.5s linear infinite; }

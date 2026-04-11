@@ -36,18 +36,33 @@ export default function PortfolioPage() {
     education 
   } = PORTFOLIO_DATA;
 
-  // Intersection Observer for Clean Reveal Animations
   useEffect(() => {
     if (loading || activePage !== 'home') return;
     
+    const observerOptions = { 
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+        } else {
+          entry.target.classList.remove('reveal-visible');
+        }
       });
-    }, { threshold: 0.15 });
+    }, observerOptions);
 
-    document.querySelectorAll('.pop-reveal, .card-reveal').forEach((t) => observer.observe(t));
-    return () => observer.disconnect();
+    const timer = setTimeout(() => {
+      const targets = document.querySelectorAll('.pop-reveal, .card-reveal');
+      targets.forEach((t) => observer.observe(t));
+    }, 100);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, [loading, activePage]);
 
   // Loading Timer
@@ -85,7 +100,7 @@ export default function PortfolioPage() {
         {/* PROFESSIONAL SUMMARY SECTION */}
         <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-stretch scroll-mt-32">
           {/* PROFILE CARD */}
-          <div className="pop-reveal order-1 md:col-span-8 bg-[#FFFFED] border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden">
+          <div className="pop-reveal reveal-left order-1 md:col-span-8 bg-[#FFFFED] border-2 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden">
             <div className="bg-black text-white px-4 py-2 flex justify-between items-center border-b-2 border-black">
               <div className="flex items-center gap-2">
                 <Activity size={14} className="text-[#A8E6A0]" />
@@ -114,7 +129,7 @@ export default function PortfolioPage() {
                     {profile.name} <span className="text-pink-500">{profile.lastName}</span>
                   </h2>
                   <div className="inline-block px-2 py-0.5 bg-black text-[#A8E6A0] text-[10px] font-black uppercase italic">
-                    Computer Engineering Specialist
+                    Computer Engineering Student
                   </div>
                 </div>
                 <p className="text-sm font-bold opacity-80 italic border-l-2 border-pink-500 pl-4 leading-tight">
@@ -125,7 +140,7 @@ export default function PortfolioPage() {
           </div>
 
           {/* CREDENTIALS SIDEBAR */}
-          <aside className="order-2 md:col-span-4">
+          <aside className="pop-reveal reveal-right order-2 md:col-span-4 h-full">
             <div className="pop-reveal bg-white border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] h-full flex flex-col overflow-hidden">
               <div className="bg-[#A8E6A0] border-b-2 border-black px-4 py-2 flex items-center justify-between">
                 <h3 className="font-black text-[11px] uppercase flex items-center gap-2 text-black">
@@ -154,10 +169,31 @@ export default function PortfolioPage() {
                     ))}
                   </ul>
                 </div>
-                <div className="pt-4 mt-auto">
-                  <a href={profile.resumeUrl} target='_blank' className="w-full bg-[#FFFF00] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-2 italic">
+                <div className="pt-4 mt-auto space-y-3">
+                  <a 
+                    href={profile.resumeUrl} 
+                    target='_blank' 
+                    className="w-full bg-[#FFFF00] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-2 italic"
+                  >
                     <FileText size={14} /> View_Resume.pdf
                   </a>
+
+                  <div className="relative group">
+                    <button
+                      disabled
+                      className="w-full bg-black/5 border-2 border-black py-2.5 text-[10px] font-black text-center uppercase opacity-60 cursor-not-allowed overflow-hidden relative"
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-2 text-black/60 italic">
+                        <Download size={14} /> Download_CV.exe (WIP)
+                      </span>
+                      
+                    <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#000_1px,transparent_0)] bg-[size:4px_4px]" />
+                    </button>
+        
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-[8px] px-2 py-1 uppercase font-black opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-black shadow-[2px_2px_0px_0px_rgba(236,72,153,1)]">
+                      Status: Compiling_Assets...
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -177,7 +213,8 @@ export default function PortfolioPage() {
             {[
               { label: "Core_Languages", data: languages, id: "01" },
               { label: "Frameworks_&_Libraries", data: frameworks, id: "02" },
-              { label: "Developer_Tools", data: developerTools, id: "03" }
+              { label: "Developer_Tools", data: developerTools, id: "03" },
+              { label: "DevOps_&_Deployment", data: devOpsDeployment, id: "04" },
             ].map((section) => (
               <div key={section.id} className="relative">
                 <div className="pop-reveal flex items-center gap-3 mb-6">
