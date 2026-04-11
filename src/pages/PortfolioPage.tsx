@@ -245,7 +245,7 @@ export default function PortfolioPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {projects.map((proj, idx) => (
+            {projects.map((proj) => (
               <div key={proj.id} className="card-reveal h-full group/container">
                 <div className="group bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex flex-col h-full overflow-hidden">
                   <div className="h-40 bg-[#F0F0F0] relative overflow-hidden border-b-2 border-black">
