@@ -8,7 +8,7 @@
 
 html { 
   scroll-behavior: smooth; 
-  scroll-padding-top: 130px; 
+  scroll-padding-top: 10px; 
 }
 
 /* Animations & Transitions */
