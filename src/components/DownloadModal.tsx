@@ -2,7 +2,6 @@
 import React from 'react';
 import { X, Download, ShieldCheck, AlertTriangle } from 'lucide-react';
 
-// Define the shape of the project for TypeScript
 interface Project {
   title?: string;
   downloadUrl?: string;

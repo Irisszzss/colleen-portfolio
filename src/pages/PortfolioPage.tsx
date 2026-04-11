@@ -15,7 +15,7 @@ import {
 import { PORTFOLIO_DATA } from '../data/portfolio';
 
 // Page and Modal Imports
-import DerivifaiGallery from '../pages/DerivifaiGallery'; 
+import DerivifaiGallery from '../components/DerivifaiGallery'; 
 import DownloadModal from '../components/DownloadModal';
 
 type PortfolioProject = (typeof PORTFOLIO_DATA)['projects'][number];
@@ -41,15 +41,15 @@ export default function PortfolioPage() {
     
     const observerOptions = { 
       threshold: 0.1,
-      rootMargin: "0px 0px 0px 0px"
+      rootMargin: "0px 0px -50px 0px" 
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('reveal-visible');
-        } else {
-          entry.target.classList.remove('reveal-visible');
+          
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
@@ -57,7 +57,7 @@ export default function PortfolioPage() {
     const timer = setTimeout(() => {
       const targets = document.querySelectorAll('.pop-reveal, .card-reveal');
       targets.forEach((t) => observer.observe(t));
-    }, 100);
+    }, 200);
 
     return () => {
       observer.disconnect();
