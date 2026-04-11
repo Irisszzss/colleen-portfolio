@@ -95,7 +95,7 @@ export default function PortfolioPage() {
       
       <Navbar />
 
-      <main className="max-w-5xl mx-auto space-y-24 md:space-y-32 relative z-10 pt-28 pb-16">
+      <main className="max-w-5xl mx-auto space-y-24 md:space-y-32 relative z-10 pt-28 ">
         
         {/* PROFESSIONAL SUMMARY SECTION */}
         <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-stretch scroll-mt-32">
