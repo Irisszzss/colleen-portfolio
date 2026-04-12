@@ -30,40 +30,38 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="max-w-5xl mx-auto px-6 pb-3 select-none">
-      <div className="grid grid-cols-1 md:grid-cols-12 border-2 border-[color:var(--card-border)] bg-[color:var(--card-bg)] shadow-[8px_8px_0px_0px_var(--card-shadow)] rounded-[32px] overflow-hidden transition-colors duration-500">
+    <footer className="max-w-5xl mx-auto px-4 md:px-6 pb-12 select-none">
+      <div className="grid grid-cols-1 md:grid-cols-12 border-2 border-[color:var(--card-border)] bg-[color:var(--card-bg)] shadow-[6px_6px_0px_0px_var(--card-shadow)] md:shadow-[8px_8px_0px_0px_var(--card-shadow)] rounded-[24px] md:rounded-[32px] overflow-hidden transition-colors duration-500">
         
         {/* Connect Bento */}
-        <div className="p-8 md:col-span-5 flex flex-col justify-center items-center md:items-start gap-4 border-b-2 md:border-b-0 md:border-r-2 border-[color:var(--card-border)] bg-[color:var(--card-bg)]">
-          <div className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] px-4 py-2 rounded-2xl shadow-[4px_4px_0px_0px_var(--card-shadow)] transition-all">
-            <Send size={16} className="text-blue-600" />
-            <span className="text-[11px] font-black uppercase tracking-widest text-[color:var(--text-color)]">Keep in Touch</span>
+        <div className="p-6 md:p-8 md:col-span-5 flex flex-col justify-center items-center md:items-start gap-3 md:gap-4 border-b-2 md:border-b-0 md:border-r-2 border-[color:var(--card-border)] bg-[color:var(--card-bg)]">
+          <div className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] px-4 py-2 rounded-2xl shadow-[3px_3px_0px_0px_var(--card-shadow)] md:shadow-[4px_4px_0px_0px_var(--card-shadow)] transition-all">
+            <Send size={16} className="text-blue-600 animate-bounce" />
+            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-[color:var(--text-color)]">Keep in Touch</span>
           </div>
-          <p className="text-[10px] font-bold uppercase opacity-40 flex items-center gap-2 tracking-[0.2em] text-[color:var(--text-color)]">
+          <p className="text-[9px] md:text-[10px] font-bold uppercase opacity-60 flex items-center gap-2 tracking-[0.2em] text-[color:var(--text-color)] text-center md:text-left">
             <Sparkles size={12} className="text-yellow-500" /> Open for Collaboration
           </p>
         </div>
 
-        {/* Icons Bento */}
-        <div className="p-8 md:col-span-7 flex items-center justify-around bg-[color:var(--card-bg)] flex-wrap gap-4">
-          {/* Email - Blue */}
-          <a href="mailto:jonescolleeniris08@outlook.com" className="group flex flex-col items-center gap-2">
-            <div className="p-4 border-2 border-[color:var(--card-border)] rounded-2xl transition-all hover:bg-[#3b82f6] hover:shadow-[4px_4px_0px_0px_var(--card-shadow)] hover:-translate-y-1 active:translate-y-0 active:shadow-none shadow-none">
-              <Mail size={24} className="text-[color:var(--text-color)] group-hover:text-white transition-colors" />
+        {/* Icons Bento - Optimized size for mobile */}
+        <div className="p-4 md:p-8 md:col-span-7 flex items-center justify-center md:justify-around bg-[color:var(--card-bg)] flex-wrap gap-4 md:gap-4">
+          {/* Email */}
+          <a href="mailto:jonescolleeniris08@outlook.com" className="group flex flex-col items-center gap-1 md:gap-2">
+            <div className="p-3 md:p-4 border-2 border-[color:var(--card-border)] rounded-xl md:rounded-2xl transition-all hover:bg-blue-600 hover:shadow-[4px_4px_0px_0px_var(--card-shadow)] hover:-translate-y-1 active:translate-y-0 active:shadow-none shadow-none">
+              <Mail className="w-5 h-5 md:w-6 md:h-6 text-[color:var(--text-color)] group-hover:text-white transition-colors" />
             </div>
-            <span className="text-[9px] font-black uppercase text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">Email</span>
+            <span className="text-[8px] md:text-[9px] font-black uppercase text-blue-600">Email</span>
           </a>
 
           {socialLinks.map((social) => (
-            <a key={social.name} href={social.href} target="_blank" className="group flex flex-col items-center gap-2">
-              {/* FIXED: Changed border and shadow to use theme variables */}
-              <div className={`p-4 border-2 border-[color:var(--card-border)] rounded-2xl transition-all hover:-translate-y-1 active:translate-y-0 shadow-none ${social.color} hover:shadow-[4px_4px_0px_0px_var(--card-shadow)]`}>
-                {/* FIXED: Changed fill to use text-color variable */}
-                <svg viewBox="0 0 24 24" className="w-6 h-6 transition-colors group-hover:fill-[#2B2B28]" style={{ fill: 'var(--text-color)' }}>
+            <a key={social.name} href={social.href} target="_blank" className="group flex flex-col items-center gap-1 md:gap-2">
+              <div className={`p-3 md:p-4 border-2 border-[color:var(--card-border)] rounded-xl md:rounded-2xl transition-all hover:-translate-y-1 active:translate-y-0 shadow-none ${social.color} hover:shadow-[4px_4px_0px_0px_var(--card-shadow)]`}>
+                <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6 transition-colors group-hover:fill-[#2B2B28]" style={{ fill: 'var(--text-color)' }}>
                   <path d={social.path} />
                 </svg>
               </div>
-              <span className={`text-[9px] font-black uppercase ${social.text} opacity-0 group-hover:opacity-100 transition-opacity`}>
+              <span className={`text-[8px] md:text-[9px] font-black uppercase ${social.text}`}>
                 {social.label}
               </span>
             </a>
@@ -72,9 +70,9 @@ export default function Footer() {
       </div>
 
       {/* Attribution */}
-      <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] font-black uppercase opacity-40 px-2 tracking-widest text-[color:var(--text-color)]">
+      <div className="mt-6 md:mt-8 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] md:text-[11px] font-black uppercase opacity-40 px-2 tracking-widest text-[color:var(--text-color)] text-center">
         <span>Region_III // PH</span>
-        <span>© {new Date().getFullYear()} Colleen Jones</span>
+        <span className="order-first md:order-last">© {new Date().getFullYear()} Colleen Jones</span>
       </div>
     </footer>
   );

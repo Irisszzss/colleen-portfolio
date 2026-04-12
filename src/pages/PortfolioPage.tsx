@@ -63,10 +63,10 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-[color:var(--bg-color)] text-[color:var(--text-color)] font-poppins selection:bg-[#2B2B28] selection:text-white pb-10 text-left transition-colors duration-500">
       <Navbar />
 
-      <main className="max-w-5xl mx-auto px-6 pt-32 space-y-10 overflow-x-hidden overflow-y-hidden">
+      <main className="max-w-5xl mx-auto px-6 pt-32 space-y-10 overflow-x-hidden overflow-y-hidden mt-[30px]">
         
         {/* HERO SECTION - REVEAL UP */}
-        <section id="about" className="pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
+        <section id="about" className="scroll-mt-[200px] pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none" />
           
           <div className="order-2 lg:order-1 lg:col-span-8 space-y-6 relative z-10 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -129,27 +129,50 @@ export default function PortfolioPage() {
         </section>
 
         {/* TECH STACK SECTION - POP REVEAL */}
-        <section id="stack" className="space-y-4">
-          {techSections.map((cat) => (
-            <div key={cat.key} className="card-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 space-y-6 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[color:var(--text-color)]">
-                  <span className={cat.color}>{cat.icon}</span> {cat.label}
-                </div>
-                <div className="flex gap-2">
-                  <button onClick={() => scroll(cat.key, 'left')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full hover:bg-[color:var(--card-bg)] active:scale-90 transition-all"><ChevronLeft size={16}/></button>
-                  <button onClick={() => scroll(cat.key, 'right')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full bg-[#2B2B28] text-white active:scale-90 transition-all shadow-[2px_2px_0px_0px_#2B2B28]"><ChevronRight size={16}/></button>
-                </div>
-              </div>
-              <div ref={(el) => { scrollRefs.current[cat.key] = el; }} className="flex overflow-x-auto pb-6 gap-4 no-scrollbar scroll-smooth">
-                {cat.data.map((item: any) => (
-                  <div key={item.name} className="min-w-[140px] md:min-w-[160px]">
-                    <SkillCard item={item} />
+        <section id="stack" className="scroll-mt-[130px] space-y-6">
+          {/* MAIN TECH STACK LABEL */}
+          <div className="flex items-center gap-4">
+              <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Tech Stack</h2>
+            <div className="h-[2px] flex-1 bg-[color:var(--card-border)] opacity-10" />
+          </div>
+
+          {/* CATEGORY CARDS */}
+          <div className="space-y-4">
+            {techSections.map((cat) => (
+              <div key={cat.key} className="card-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 space-y-6 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[color:var(--text-color)]">
+                    <span className={cat.color}>{cat.icon}</span> {cat.label}
                   </div>
-                ))}
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => scroll(cat.key, 'left')} 
+                      className="p-2 border-2 border-[color:var(--card-border)] rounded-full hover:bg-[color:var(--card-bg)] active:scale-90 transition-all cursor-pointer"
+                    >
+                      <ChevronLeft size={16}/>
+                    </button>
+                    <button 
+                      onClick={() => scroll(cat.key, 'right')} 
+                      className="p-2 border-2 border-[color:var(--card-border)] rounded-full bg-[#2B2B28] text-white active:scale-90 transition-all shadow-[2px_2px_0px_0px_#2B2B28] cursor-pointer"
+                    >
+                      <ChevronRight size={16}/>
+                    </button>
+                  </div>
+                </div>
+                
+                <div 
+                  ref={(el) => { scrollRefs.current[cat.key] = el; }} 
+                  className="flex overflow-x-auto pb-6 gap-4 no-scrollbar scroll-smooth"
+                >
+                  {cat.data.map((item: any) => (
+                    <div key={item.name} className="min-w-[140px] md:min-w-[160px]">
+                      <SkillCard item={item} />
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </section>
 
         {/* PROJECTS SECTION - SLIDE FROM RIGHT */}
@@ -190,9 +213,9 @@ export default function PortfolioPage() {
         </section>
 
         {/* EDUCATION SECTION - POP REVEAL */}
-        <section id="edu" className="pop-reveal space-y-6">
+        <section id="edu" className="scroll-mt-[130px] pop-reveal space-y-6">
           <div className="flex items-center gap-4">
-             <h2 className="text-xl font-black uppercase italic text-[color:var(--text-color)] text-left">Academic_History</h2>
+             <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Academic History</h2>
              <div className="h-0.5 flex-1 bg-[color:var(--card-border)] opacity-10" />
           </div>
           <div className="space-y-4">

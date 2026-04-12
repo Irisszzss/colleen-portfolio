@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { Terminal, Cat, Sparkles } from 'lucide-react'; 
+
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const observer = useRef<IntersectionObserver | null>(null);
 
-  // Theme Syncing
+  // Theme Syncing - Optimized for smooth transition
   useEffect(() => {
     const savedTheme = typeof window !== 'undefined' ? window.localStorage.getItem('theme') : null;
     const prefersDark = typeof window !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)').matches : false;
@@ -30,7 +31,7 @@ export default function Navbar() {
     { label: 'Academic', href: '#edu', id: 'edu' },
   ];
 
-  // Section Observer
+  // Section Observer with adjusted rootMargin for better Hero detection
   useEffect(() => {
     observer.current = new IntersectionObserver(
       (entries) => {
@@ -38,7 +39,7 @@ export default function Navbar() {
           if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { rootMargin: '-20% 0px -40% 0px', threshold: 0.1 }
+      { rootMargin: '-10% 0px -70% 0px', threshold: 0.1 }
     );
 
     navItems.forEach((item) => {
@@ -49,9 +50,25 @@ export default function Navbar() {
     return () => observer.current?.disconnect();
   }, []);
 
+  // Smooth Scroll Fix for Fixed Header Offset
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      // Calculate position: Element offset minus a larger buffer (120px)
+      const offsetTop = elem.getBoundingClientRect().top + window.pageYOffset - 130;
+      
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-[100] px-4 md:px-8 pt-4 md:pt-6 pointer-events-none">
+      <header className="fixed top-0 left-0 w-full z-[150] px-4 md:px-8 pt-4 md:pt-6 pointer-events-none">
         <nav className="max-w-5xl mx-auto flex justify-between items-center bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] shadow-[6px_6px_0px_0px_var(--card-shadow)] rounded-2xl h-[60px] md:h-[70px] pointer-events-auto overflow-hidden transition-all duration-500">
           
           {/* BRANDING */}
@@ -72,6 +89,7 @@ export default function Navbar() {
                 <a 
                   key={item.id}
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className={`flex-1 flex flex-col items-center justify-center transition-all duration-300 relative group
                     ${isActive 
                       ? 'bg-blue-600 dark:bg-purple-700 text-white' 
@@ -93,36 +111,24 @@ export default function Navbar() {
 
           {/* CUTESY CAT TOGGLE */}
           <div className="flex items-center gap-4 px-5 bg-transparent border-l-2 border-[color:var(--card-border)] h-full">
-            <div className="flex flex-col items-center gap-1 group">
-              <button
-                onClick={toggleTheme}
-                aria-label="Toggle dark mode"
-                className={`
-                  flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-500 cursor-pointer
-                  ${theme === 'dark' 
-                    ? 'bg-purple-600 border-purple-400 shadow-[0px_0px_15px_rgba(168,85,247,0.6)]' 
-                    : 'bg-white border-[#2B2B28] shadow-[4px_4px_0px_0px_#2B2B28] hover:translate-x-1 hover:translate-y-1 hover:shadow-none'
-                  }
-                `}
-              >
-                {/* FIXED: Swapped to Cat and added expression logic */}
-                {theme === 'dark' ? (
-                  <Cat 
-                    size={22} 
-                    strokeWidth={2} 
-                    className="text-white fill-purple-700" // Glowing neon effect outline
-                  />
-                ) : (
-                  <Cat 
-                    size={22} 
-                    strokeWidth={2} 
-                    className="text-[#2B2B28] fill-yellow-400/70" // Cheerful filled cat
-                  />
-                )}
-              </button>
-            </div>
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle dark mode"
+              className={`
+                flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-500 cursor-pointer
+                ${theme === 'dark' 
+                  ? 'bg-purple-600 border-purple-400 shadow-[0px_0px_15px_rgba(168,85,247,0.6)]' 
+                  : 'bg-white border-[#2B2B28] shadow-[4px_4px_0px_0px_#2B2B28] hover:translate-x-1 hover:translate-y-1 hover:shadow-none'
+                }
+              `}
+            >
+              {theme === 'dark' ? (
+                <Cat size={22} strokeWidth={2} className="text-white fill-purple-700" />
+              ) : (
+                <Cat size={22} strokeWidth={2} className="text-[#2B2B28] fill-yellow-400/70" />
+              )}
+            </button>
             
-            {/* Minimal Status Console */}
             <div className="hidden lg:flex flex-col items-start justify-center">
                <div className="flex items-center gap-1.5">
                   <div className={`w-2 h-2 rounded-full ${theme === 'dark' ? 'bg-purple-400 shadow-[0_0_8px_#a855f7]' : 'bg-blue-600 animate-pulse'}`} />
@@ -137,7 +143,7 @@ export default function Navbar() {
       </header>
 
       {/* MOBILE NAV */}
-      <div className="fixed bottom-6 left-0 w-full z-[100] px-6 md:hidden pointer-events-none">
+      <div className="fixed bottom-6 left-0 w-full z-[150] px-6 md:hidden pointer-events-none">
         <nav className="max-w-sm mx-auto flex bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] p-1 rounded-2xl shadow-[6px_6px_0px_0px_var(--card-shadow)] pointer-events-auto overflow-hidden">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -145,6 +151,7 @@ export default function Navbar() {
               <a 
                 key={item.id}
                 href={item.href} 
+                onClick={(e) => handleNavClick(e, item.href)}
                 className={`flex-1 text-center py-3 rounded-xl font-black text-[9px] uppercase transition-all duration-300
                   ${isActive 
                     ? 'bg-blue-600 dark:bg-purple-700 text-white shadow-[3px_3px_0px_0px_var(--card-shadow)] -translate-y-1' 
