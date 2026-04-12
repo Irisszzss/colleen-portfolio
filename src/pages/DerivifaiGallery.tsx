@@ -1,11 +1,9 @@
 "use client";
 import { useLayoutEffect } from 'react'; 
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ShieldAlert, Layout, Video, Terminal, Cpu, Code2, Globe } from 'lucide-react';
 import ScrollToTop from '../components/ScrollToTop';
-import Navbar from '../components/Navbar';
 
-// --- IMAGE ASSET IMPORTS ---
 import deriv2 from '../assets/Projects/Derivifai/deriv2.png';
 import deriv3 from '../assets/Projects/Derivifai/deriv3.png';
 import deriv4 from '../assets/Projects/Derivifai/deriv4.png';
@@ -17,14 +15,12 @@ import deriv9 from '../assets/Projects/Derivifai/deriv9.png';
 import deriv10 from '../assets/Projects/Derivifai/deriv10.png';
 import deriv11 from '../assets/Projects/Derivifai/deriv11.png';
 
-// --- VIDEO ASSET IMPORTS ---
 import demo1 from '../assets/Projects/Derivifai/Deriv1vid.mp4';
 import demo2 from '../assets/Projects/Derivifai/Deriv2vid.mp4';
 
 const DerivifaiGallery = () => {
-  const navigate = useNavigate(); // Initialize the router navigation
+  const navigate = useNavigate();
 
-  // Automatically scroll to top synchronously before the user sees the page
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -51,22 +47,17 @@ const DerivifaiGallery = () => {
 
   return (
     <>
-      {/* Navbar sits at the top level */}
-      <Navbar />
-
       <div className="min-h-screen bg-[color:var(--bg-color)] p-6 sm:p-10 font-poppins text-[color:var(--text-color)] selection:bg-[#2B2B28] selection:text-white">
         
-        {/* BACK BUTTON - Updated to use React Router navigate */}
-        <nav className="max-w-6xl mx-auto mb-8 mt-20">
+        <nav className="max-w-6xl mx-auto mb-8 mt-6">
           <button 
-            onClick={() => navigate('/')} // Navigates back to your home/portfolio route
+            onClick={() => navigate('/#projects')}
             className="bg-[color:var(--card-bg)] text-[color:var(--text-color)] px-5 py-2.5 border-2 border-[color:var(--card-border)] rounded-xl shadow-[4px_4px_0px_0px_var(--card-shadow)] hover:bg-yellow-400 dark:hover:bg-purple-600 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2 uppercase font-black text-[10px] tracking-widest"
           >
             <ChevronLeft size={16} /> Back
           </button>
         </nav>
 
-        {/* HEADER BENTO */}
         <header className="max-w-6xl mx-auto mb-12">
           <div className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-8 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
             <div className="flex items-center gap-2 mb-4 text-blue-600 dark:text-purple-400 font-black uppercase text-[9px] tracking-widest">
@@ -84,7 +75,6 @@ const DerivifaiGallery = () => {
 
         <main className="max-w-6xl mx-auto space-y-12">
           
-          {/* TECH STACK SECTION */}
           <section className="space-y-6">
             <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 font-black uppercase text-[10px] tracking-widest">
               <Code2 size={16} /> Tech Stack
@@ -101,7 +91,6 @@ const DerivifaiGallery = () => {
             </div>
           </section>
 
-          {/* VIDEOS */}
           <section className="space-y-6">
             <div className="flex items-center gap-3 text-blue-600 dark:text-purple-400 font-black uppercase text-[10px] tracking-widest">
               <Video size={16} /> Videos
@@ -117,7 +106,6 @@ const DerivifaiGallery = () => {
             </div>
           </section>
 
-          {/* SCREENSHOTS */}
           <section className="space-y-6 pb-12">
             <div className="flex items-center gap-3 text-yellow-600 dark:text-yellow-400 font-black uppercase text-[10px] tracking-widest">
               <Layout size={16} /> UI Screenshots
