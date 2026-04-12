@@ -21,7 +21,6 @@ export default function PortfolioPage() {
   const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { profile, languages, frameworks, developerTools, devOpsDeployment, projects, education } = PORTFOLIO_DATA;
 
-  // SCROLL REVEAL LOGIC
   useEffect(() => {
     const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
     const observer = new IntersectionObserver((entries) => {
