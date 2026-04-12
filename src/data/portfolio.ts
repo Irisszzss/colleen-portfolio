@@ -5,10 +5,6 @@ import CJ from '../assets/CJ.jpg';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
 
-// Import icons for techSections (Assuming lucide-react is used in your component)
-// In the data file, we store them as identifiers or labels if not importing React components directly
-import { Code2, Database, Globe, Monitor } from 'lucide-react';
-
 export const PORTFOLIO_DATA = {
   profile: {
     name: "Colleen Iris",
