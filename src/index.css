@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
+/* 1. Import Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @theme {
+  --font-poppins: "Poppins", sans-serif;
+
+  /* Tell Tailwind v4 to use the .dark class on the <html> element */
+  --variant-dark: .dark &;
+
   --animate-scan: scan 2s linear infinite;
   --animate-load: load 3s ease-in-out forwards;
   --animate-spin-slow: spin-slow 8s linear infinite;
@@ -10,78 +18,187 @@
     from { transform: translateY(-100%); } 
     to { transform: translateY(200%); } 
   }
-
   @keyframes load { 
     from { transform: translateX(-100%); } 
     to { transform: translateX(0); } 
   }
-
   @keyframes spin-slow { 
     from { transform: rotate(0deg); } 
     to { transform: rotate(360deg); } 
   }
-
   @keyframes marquee { 
     0% { transform: translateX(100%); } 
     100% { transform: translateX(-100%); } 
   }
-
-  @keyframes constructing {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-  }
 }
 
+/* --- THEME VARIABLE SYSTEM --- */
+:root {
+  --bg-color: #f3e8ff !important; 
+  --text-color: #2e1065 !important;
+  --stroke-color: #2B2B28 !important;
+  --card-bg: #ffffff !important;
+  --card-border: #2B2B28 !important;
+  --card-shadow: #2B2B28 !important;
+}
 
-html { 
+/* 3. Manual Variable Swaps - Forced Priority */
+.dark {
+  --bg-color: #0f071a !important; 
+  --text-color: #e9d5ff !important;
+  --stroke-color: #e9d5ff !important;
+  --card-bg: #1e1033 !important; 
+  --card-border: rgba(168, 85, 247, 0.3) !important;
+  --card-shadow: #7e22ce !important;
+}
+
+/* 4. THE NUCLEAR FIX: Force variables onto the layout */
+html, 
+body, 
+#root, 
+#__next { 
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  font-family: var(--font-poppins);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+html {
   scroll-behavior: smooth; 
-  scroll-padding-top: 10px; 
+  scroll-padding-top: 130px; 
+}
+
+.theme-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-color) !important;
+  box-shadow: 6px 6px 0px 0px var(--card-shadow) !important;
+  transition: all 0.35s ease;
+}
+
+.theme-panel {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-color) !important;
+}
+
+.theme-surface {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.theme-border {
+  border-color: var(--card-border) !important;
+}
+
+.theme-text {
+  color: var(--text-color) !important;
+}
+
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-\[\#f8fafc\],
+.dark .bg-\[\#c2edc5\],
+.dark .bg-\[\#FFFFED\] {
+  background-color: var(--card-bg) !important;
+}
+
+.dark .border-\[\#2B2B28\],
+.dark .border-\[\#f8fafc\] {
+  border-color: var(--card-border) !important;
+}
+
+.dark .text-\[\#2B2B28\],
+.dark .text-\[\#4A4A48\],
+.dark .text-\[\#2B2B28\]\/40,
+.dark .text-\[\#2B2B28\]\/60,
+.dark .text-\[\#2B2B28\]\/30,
+.dark .text-\[\#2B2B28\]\/50 {
+  color: var(--text-color) !important;
+}
+
+.dark .hover\:bg-white:hover {
+  background-color: var(--card-bg) !important;
 }
 
 body {
   @apply antialiased;
 }
 
-/* --- Reveal System --- */
-/* These classes handle the entry animations for your sections */
+/* --- SMART COMPONENTS --- */
+
+/* Use this class for every card, stat, and section container */
+.smart-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-color) !important;
+  box-shadow: 6px 6px 0px 0px var(--card-shadow) !important;
+  transition: all 0.5s ease;
+}
+
+.dark-stroke {
+  -webkit-text-stroke: 1.5px var(--stroke-color);
+  color: transparent;
+  transition: -webkit-text-stroke 0.5s ease;
+}
+
+.glass-panel {
+  background-color: var(--card-bg) !important;
+  backdrop-blur: 12px;
+  border: 1px solid var(--card-border) !important;
+  opacity: 0.9;
+}
+
+/* --- UI HELPERS --- */
+
+::selection {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Force text inside cards to inherit the theme color */
+.smart-card h1, 
+.smart-card h2, 
+.smart-card h3, 
+.smart-card h4, 
+.smart-card p, 
+.smart-card span {
+  color: inherit !important;
+}
+
+/* --- ENHANCED REVEAL SYSTEM --- */
+
+/* 1. Initial State: Hidden and shifted down/sideways */
 .pop-reveal, 
 .card-reveal { 
   opacity: 0; 
   will-change: transform, opacity; 
-  /* Professional Out-Quart easing for a high-end engineering feel */
-  transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), 
-              transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: opacity 1.2s cubic-bezier(0.23, 1, 0.32, 1), 
+              transform 1.2s cubic-bezier(0.23, 1, 0.32, 1),
+              filter 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  filter: blur(10px); 
 }
 
-/* Entry Directions */
-.reveal-left { transform: translateX(-30px); }
-.reveal-right { transform: translateX(30px); }
+/* Directional Offsets */
+.reveal-left { transform: translateX(-60px); }
+.reveal-right { transform: translateX(60px); }
 
-/* Default Direction (Up) */
+/* Default Offset (Slide Up) */
 .pop-reveal:not(.reveal-left):not(.reveal-right), 
 .card-reveal { 
-  transform: translateY(30px); 
+  transform: translateY(60px); 
 }
 
-/* The Active State (Triggered by IntersectionObserver in JS) */
+/* 2. The Active State: Triggered when the element enters the viewport */
 .reveal-visible { 
   opacity: 1 !important; 
   transform: translate(0, 0) !important; 
-}
-
-/* --- Manual Utility Overrides --- */
-.animate-constructing {
-  background-size: 200% 100%;
-  animation: constructing 2.5s linear infinite;
-}
-
-/* Custom Scanline Intensity */
-.scanline-effect {
-  @apply pointer-events-none fixed inset-0 z-50;
-  background: linear-gradient(
-    to bottom,
-    transparent 50%,
-    rgba(0, 0, 0, 0.05) 51%
-  );
-  background-size: 100% 4px;
+  filter: blur(0px) !important;
 }

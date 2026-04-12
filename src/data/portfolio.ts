@@ -4,7 +4,10 @@ import RootToolImg from '../assets/Projects/RootTool.png';
 import CJ from '../assets/CJ.jpg';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
-import resume from '../../public/Jones_Colleen_Resume.pdf';
+
+// Import icons for techSections (Assuming lucide-react is used in your component)
+// In the data file, we store them as identifiers or labels if not importing React components directly
+import { Code2, Database, Globe, Monitor } from 'lucide-react';
 
 export const PORTFOLIO_DATA = {
   profile: {
@@ -14,8 +17,8 @@ export const PORTFOLIO_DATA = {
     bio: "Failures aren't roadblocks, they’re just part of the debugging process. It’s never about being better than everyone else. It’s just you vs. you, pushing to see how much further you can take your own potential.",
     avatar: CJ,
     lvl: "1",
-    resumeUrl: resume, 
-    cvUrl: "#", // Replace with your actual document path
+    resumeUrl: '/Jones_Colleen_Resume.pdf',
+    cvUrl: "#", 
     briefing: "Welcome to my digital portfolio. Here, you'll find a curated selection of my projects, skills, and educational background. Each section is designed to provide insight into my technical expertise and creative approach to software development. Feel free to explore and connect with me for potential collaborations or opportunities.",
   },
   
@@ -38,7 +41,7 @@ export const PORTFOLIO_DATA = {
     { name: "Vue.js", slug: "vuedotjs", color: "#4FC08D", bg: "bg-[#35495E]" },
     { name: "Laravel", slug: "laravel", color: "#FF2D20", bg: "bg-white" },
     { name: "Node.js", slug: "nodedotjs", color: "#339933", bg: "bg-[#303030]" },
-    { name: "Express.js", slug: "express", color: "#FFFFFF", bg: "bg-black" },
+    { name: "Express.js", slug: "express", color: "#000000" },
     { name: "Flutter", slug: "flutter", color: "#02569B", bg: "bg-white" },
     { name: "Tailwind CSS", slug: "tailwindcss", color: "#06B6D4", bg: "bg-[#0F172A]" },
     { name: "Firebase", slug: "firebase", color: "#FFCA28", bg: "bg-[#039BE5]" },
@@ -62,7 +65,17 @@ export const PORTFOLIO_DATA = {
     { name: "Firebase", slug: "firebase", color: "#FFCA28", bg: "bg-[#039BE5]" },
     { name: "Vercel", slug: "vercel", color: "#000000", bg: "bg-white" },
     { name: "Render", slug: "render", color: "#000000", bg: "bg-white" },
-  ],
+  ], 
+
+  // Added techSections here for easier mapping in your component
+  get techSections() {
+    return [
+      { label: "Programming", data: this.languages, icon: "Code2", color: "text-blue-500", key: "lang" },
+      { label: "Frameworks", data: this.frameworks, icon: "Database", color: "text-green-500", key: "frame" },
+      { label: "Cloud & Ops", data: this.devOpsDeployment, icon: "Globe", color: "text-purple-500", key: "devops" },
+      { label: "Tools", data: this.developerTools, icon: "Monitor", color: "text-yellow-600", key: "tools" }
+    ];
+  },
 
   projects: [
     { 
@@ -91,32 +104,33 @@ export const PORTFOLIO_DATA = {
   ],
 
   education: [
-  { 
-    school: "Bulacan State University", 
-    logo: BSULogo,
-    degree: "Computer Engineering", 
-    year: "2022-2026",
-    eduId: "BSU-COE-2022",
-    progress: 90,
-    awards: [
-      { id: "A-01", title: "Magna Cum Laude", issuer: "College of Engineering", date: "June 2026" },
-      { id: "A-02", title: "Dean's Lister", issuer: "College of Engineering", date: "2023-2026" },
-      { id: "A-03", title: "ICpEP Region III Logic Breadboarding Participant", issuer: "ICpEP.se Region III", date: "March 2026" },
-      { id: "A-04", title: "Huawei - Innovation Track Participant", issuer: "Huawei ICT Academy", date: "November 2025" },
-      { id: "A-05", title: "Huawei - Computing Track Participant", issuer: "Huawei ICT Academy", date: "November 2024" },
-    ]
+    { 
+      school: "Bulacan State University", 
+      logo: BSULogo,
+      degree: "BS in Computer Engineering", 
+      year: "2022 — 2026",
+      eduId: "BSU-COE-2022",
+      progress: 90, // Updated progression
+      awards: [
+        { id: "AW-01", title: "Magna Cum Laude", issuer: "College of Engineering", date: "June 2026" },
+        { id: "AW-02", title: "Dean's Lister", issuer: "College of Engineering", date: "2023-2026" },
+        { id: "AW-03", title: "ICpEP R3 Logic Breadboarding Participant", issuer: "ICpEP.se Region III", date: "March 2026" },
+        { id: "AW-04", title: "Huawei Innovation Track Participant", issuer: "Huawei ICT Academy", date: "Nov 2025" },
+        { id: "AW-05", title: "Huawei Computing Track Participant", issuer: "Huawei ICT Academy", date: "Nov 2024" },
+      ]
+    },
+    { 
+      school: "St. Francis de Assisi Montessori School", 
+      logo: SFAMSLogo,
+      degree: "Senior High School (STEM) | Junior High", 
+      year: "2016 — 2022",
+      eduId: "SFAMS-STEM-2016",
+      progress: 100, // Completed
+      awards: [
+        { id: "AW-06", title: "SHS - With Honors", issuer: "SFAMS", date: "May 2022" },
+        { id: "AW-07", title: "SHS - Best Thesis Presenter", issuer: "SFAMS", date: "May 2022" },
+        { id: "AW-08", title: "JHS - With High Honors", issuer: "SFAMS", date: "March 2020" },
+      ]
   },
-  { 
-    school: "St. Francis de Assisi Montessori School", 
-    logo: SFAMSLogo,
-    degree: "Senior High School (STEM) | Junior High School", 
-    year: "2016-2022",
-    eduId: "SFAMS-STEM-2016",
-    awards: [
-      { id: "A-01", title: "Senior High School - With Honors", issuer: "St. Francis de Assisi Montessori School", date: "May 2022" },
-      { id: "A-02", title: "Senior High School - Best Thesis Presenter", issuer: "St. Francis de Assisi Montessori School", date: "May 2022" },
-      { id: "A-03", title: "Junior High School - With High Honors", issuer: "St. Francis de Assisi Montessori School", date: "March 2020" },
-    ]
-  },
-],
+  ],
 };

@@ -1,20 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Globe, FileText, Database, Activity, ChevronRight, Download } from 'lucide-react';
-
+import { useState, useEffect, useRef } from 'react';
 import { 
-  Navbar, 
-  Footer, 
-  Loader, 
-  EducationCard, 
-  SkillCard, 
-  ScrollToTop 
-} from '../components';
-
+  FileText, Database, Globe, ArrowUpRight, ChevronRight, ChevronLeft,
+  Code2, Monitor, Download, ShieldCheck, Clock, MapPin, Activity 
+} from 'lucide-react';
+import { Navbar, Loader, ScrollToTop, SkillCard, Footer, EducationCard } from '../components'; 
 import { PORTFOLIO_DATA } from '../data/portfolio';
-
-// Page and Modal Imports
 import DerivifaiGallery from '../components/DerivifaiGallery'; 
 import DownloadModal from '../components/DownloadModal';
 
@@ -26,266 +18,196 @@ export default function PortfolioPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
 
-  const { 
-    profile, 
-    languages, 
-    frameworks, 
-    developerTools, 
-    devOpsDeployment, 
-    projects, 
-    education 
-  } = PORTFOLIO_DATA;
+  const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const { profile, languages, frameworks, developerTools, devOpsDeployment, projects, education } = PORTFOLIO_DATA;
 
+  // SCROLL REVEAL LOGIC
   useEffect(() => {
-    if (loading || activePage !== 'home') return;
-    
-    const observerOptions = { 
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px" 
-    };
-
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('reveal-visible');
-          
-          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    const timer = setTimeout(() => {
-      const targets = document.querySelectorAll('.pop-reveal, .card-reveal');
-      targets.forEach((t) => observer.observe(t));
-    }, 200);
+    const elements = document.querySelectorAll('.pop-reveal, .card-reveal');
+    elements.forEach((el) => observer.observe(el));
 
-    return () => {
-      observer.disconnect();
-      clearTimeout(timer);
-    };
-  }, [loading, activePage]);
+    return () => observer.disconnect();
+  }, [loading, activePage]); // Re-run when page changes or loading finishes
 
-  // Loading Timer
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleProjectAction = (proj: PortfolioProject) => {
-    if (proj.id === 2) {
-      setActivePage('derivifai');
-    } else if (proj.id === 3) {
-      setSelectedProject(proj);
-      setIsModalOpen(true);
-    } else {
-      window.open(proj.url, '_blank', 'noopener,noreferrer');
+  const scroll = (key: string, direction: 'left' | 'right') => {
+    const container = scrollRefs.current[key];
+    if (container) {
+      container.scrollBy({ left: direction === 'left' ? -300 : 300, behavior: 'smooth' });
     }
   };
 
-  if (loading) return <Loader />;
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
-  if (activePage === 'derivifai') {
-    return <DerivifaiGallery onBack={() => setActivePage('home')} />;
-  }
+  if (loading) return <Loader />;
+  if (activePage === 'derivifai') return <DerivifaiGallery onBack={() => setActivePage('home')} />;
+
+  const techSections = [
+    { label: "Programming", data: languages, icon: <Code2 size={14}/>, color: "text-blue-500", key: "lang" },
+    { label: "Frameworks", data: frameworks, icon: <Database size={14}/>, color: "text-green-500", key: "frame" },
+    { label: "Cloud & Ops", data: devOpsDeployment, icon: <Globe size={14}/>, color: "text-purple-500", key: "devops" },
+    { label: "Tools", data: developerTools, icon: <Monitor size={14}/>, color: "text-yellow-600", key: "tools" }
+  ];
 
   return (
-    <div className="min-h-screen bg-[#A8E6A0] p-3 sm:p-4 font-mono text-[#1D3D2A] relative overflow-x-hidden 
-      bg-[linear-gradient(90deg,rgba(29,61,42,0.02)_1px,transparent_1px),linear-gradient(rgba(29,61,42,0.02)_1px,transparent_1px)] 
-      bg-[size:40px_40px]">
-      
+    <div className="min-h-screen bg-[color:var(--bg-color)] text-[color:var(--text-color)] font-poppins selection:bg-[#2B2B28] selection:text-white pb-10 text-left transition-colors duration-500">
       <Navbar />
 
-      <main className="max-w-5xl mx-auto space-y-24 md:space-y-32 relative z-10 pt-28 ">
+      <main className="max-w-5xl mx-auto px-6 pt-32 space-y-10 overflow-x-hidden overflow-y-hidden">
         
-        {/* PROFESSIONAL SUMMARY SECTION */}
-        <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-stretch scroll-mt-32 mt-10">
-          {/* PROFILE CARD */}
-          <div className="pop-reveal reveal-left order-1 md:col-span-8 bg-[#FFFFED] border-2 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden">
-            <div className="bg-black text-white px-4 py-2 flex justify-between items-center border-b-2 border-black">
-              <div className="flex items-center gap-2">
-                <Activity size={14} className="text-[#A8E6A0]" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Professional_Summary</span>
-              </div>
-              <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
+        {/* HERO SECTION - REVEAL UP */}
+        <section id="about" className="pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none" />
+          
+          <div className="order-2 lg:order-1 lg:col-span-8 space-y-6 relative z-10 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[color:var(--card-bg)] border border-blue-600 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest text-blue-600 shadow-[2px_2px_0px_0px_#2563eb]">
+              <ShieldCheck size={14} /> {profile.title}
             </div>
 
-            <div className="p-6 md:p-10 flex flex-col md:flex-row items-center justify-center gap-8 flex-1 text-center md:text-left">
-              <div className="relative shrink-0">
-                <div className="w-28 h-28 md:w-36 md:h-36 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] overflow-hidden group/avatar">
-                  <img 
-                    src={profile.avatar} 
-                    alt={profile.name} 
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover/avatar:scale-110 group-hover/avatar:-rotate-3"
-                  />
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-black text-white border border-black px-2 py-0.5 font-black text-[9px] uppercase">
-                  Class_2026
-                </div>
-              </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[0.9] tracking-tighter uppercase text-[color:var(--text-color)]">
+              {profile.name} <br className="block sm:hidden" /> 
+              <span className="text-blue-600 lg:text-[color:var(--text-color)] lg:dark-stroke">{profile.lastName}</span>
+            </h1>
 
-              <div className="flex-1 space-y-4">
-                <div className="space-y-1">
-                  <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none">
-                    {profile.name} <span className="text-pink-500">{profile.lastName}</span>
-                  </h2>
-                  <div className="inline-block px-2 py-0.5 bg-black text-[#A8E6A0] text-[10px] font-black uppercase italic">
-                    Computer Engineering Student
-                  </div>
+            <p className="text-xs md:text-base text-[color:var(--text-color)]/80 max-w-xl leading-relaxed font-medium italic border-l-4 lg:border-l-2 border-yellow-400 pl-4">
+              {profile.bio}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <a href={profile.resumeUrl} target="_blank" className="flex items-center gap-2 bg-[#2B2B28] text-white px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-blue-600 transition-all shadow-[4px_4px_0px_0px_#3b82f6] active:translate-x-1 active:translate-y-1 active:shadow-none">
+                <FileText size={14} /> Resume <ArrowUpRight size={12} />
+              </a>
+              <div className="relative group/cv">
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#28292b] text-white text-[8px] font-black uppercase tracking-tighter rounded-md opacity-0 group-hover/cv:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-[3px_3px_0px_0px_#eab308] z-50">
+                  Compiling... 
                 </div>
-                <p className="text-sm font-bold opacity-80 italic border-l-2 border-pink-500 pl-4 leading-tight">
-                  "{profile.bio}"
-                </p>
+                <button disabled className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] text-[color:var(--text-color)]/40 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-not-allowed transition-all grayscale opacity-60">
+                  <Download size={14} /> CV
+                </button>
               </div>
             </div>
           </div>
 
-          {/* CREDENTIALS SIDEBAR */}
-          <aside className="pop-reveal reveal-right order-2 md:col-span-4 h-full">
-            <div className="pop-reveal bg-white border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] h-full flex flex-col overflow-hidden">
-              <div className="bg-[#A8E6A0] border-b-2 border-black px-4 py-2 flex items-center justify-between">
-                <h3 className="font-black text-[11px] uppercase flex items-center gap-2 text-black">
-                  <Database size={14} /> Core_Credentials
-                </h3>
-              </div>
-              <div className="p-5 flex-1 flex flex-col space-y-6">
-                <div className="grid grid-cols-2 gap-2 text-[10px] font-black uppercase">
-                  <div className="bg-[#FFFFED] p-2 border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex flex-col">
-                    <span className="opacity-50 text-[7px] mb-1">Affiliation</span>
-                    <span className="text-[9px]">ICpEP.se R3 Member</span>
-                  </div>
-                  <div className="bg-black text-white p-2 border border-black flex flex-col">
-                    <span className="opacity-50 text-[7px] mb-1">Status</span>
-                    <span className="text-[9px]">READY_FOR_WORK</span>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <span className="text-[9px] font-black opacity-40 uppercase block border-b border-black/10 pb-1">Specialization</span>
-                  <ul className="text-[11px] font-black uppercase space-y-3">
-                    {['Reactive UI', 'API Architecture', 'Full-Stack'].map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 group">
-                        <div className="w-2 h-2 bg-pink-500 border border-black group-hover:rotate-45 transition-transform" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="pt-4 mt-auto space-y-3">
-                  <a 
-                    href={profile.resumeUrl} 
-                    target='_blank' 
-                    className="w-full bg-[#FFFF00] border-2 border-black py-2.5 text-[11px] font-black text-center uppercase hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center gap-2 italic"
-                  >
-                    <FileText size={14} /> View_Resume.pdf
-                  </a>
-
-                  <div className="relative group">
-                    <button
-                      disabled
-                      className="w-full bg-black/5 border-2 border-black py-2.5 text-[10px] font-black text-center uppercase opacity-60 cursor-not-allowed overflow-hidden relative"
-                    >
-                      <span className="relative z-10 flex items-center justify-center gap-2 text-black/60 italic">
-                        <Download size={14} /> Download_CV.exe (WIP)
-                      </span>
-                      
-                    <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#000_1px,transparent_0)] bg-[size:4px_4px]" />
-                    </button>
-        
-                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-[8px] px-2 py-1 uppercase font-black opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-black shadow-[2px_2px_0px_0px_rgba(236,72,153,1)]">
-                      Status: Compiling_Assets...
-                    </div>
-                  </div>
-                </div>
+          <div className="order-1 lg:order-2 lg:col-span-4 flex items-center justify-center">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-yellow-400 rounded-[32px] translate-x-2 translate-y-2 border-2 border-[color:var(--card-border)] -z-10" />
+              <div className="w-48 h-48 sm:w-56 sm:h-56 lg:w-full lg:max-w-[280px] aspect-square bg-[color:var(--card-bg)] rounded-[32px] overflow-hidden border-2 border-[color:var(--card-border)] transition-transform group-hover:-rotate-2 duration-300">
+                <img src={profile.avatar} className="w-full h-full object-cover" alt="Profile" />
               </div>
             </div>
-          </aside>
-        </section>
-
-        {/* TECH STACK SECTION */}
-        <section id="stack" className="space-y-12 scroll-mt-32">
-          <div className="pop-reveal flex items-center gap-4 border-b-2 border-black pb-4">
-            <div className="bg-black text-[#A8E6A0] px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(236,72,153,1)]">
-              <h3 className="text-xl md:text-2xl font-black uppercase italic">Technical_Stack</h3>
-            </div>
-            <div className="flex-1 h-[2px] bg-black/10" />
-          </div>
-
-          <div className="space-y-16">
-            {[
-              { label: "Core_Languages", data: languages, id: "01" },
-              { label: "Frameworks_&_Libraries", data: frameworks, id: "02" },
-              { label: "Developer_Tools", data: developerTools, id: "03" },
-              { label: "DevOps_&_Deployment", data: devOpsDeployment, id: "04" },
-            ].map((section) => (
-              <div key={section.id} className="relative">
-                <div className="pop-reveal flex items-center gap-3 mb-6">
-                  <div className="bg-black text-white text-[10px] font-black w-7 h-7 flex items-center justify-center">
-                    {section.id}
-                  </div>
-                  <h4 className="text-sm font-black uppercase tracking-widest italic">{section.label}</h4>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 md:gap-4">
-                  {section.data.map((item, idx) => (
-                    <div key={idx} className="card-reveal">
-                      <SkillCard item={item} index={idx} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
           </div>
         </section>
 
-        {/* PROJECTS SECTION */}
-        <section id="projects" className="space-y-10 scroll-mt-32">
-          <div className="pop-reveal flex items-center gap-4">
-            <div className="bg-black text-white px-5 py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] flex items-center gap-3">
-              <Globe size={18} className="text-pink-500" />
-              <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight italic">Project_Archive</h3>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {projects.map((proj) => (
-              <div key={proj.id} className="card-reveal h-full group/container">
-                <div className="group bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex flex-col h-full overflow-hidden">
-                  <div className="h-40 bg-[#F0F0F0] relative overflow-hidden border-b-2 border-black">
-                    <img src={proj.image} alt={proj.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
-                  </div>
-                  <div className="p-5 flex-1 flex flex-col space-y-3 text-left">
-                    <h4 className="text-lg font-black uppercase tracking-tighter group-hover:text-pink-600 transition-colors">{proj.title}</h4>
-                    <p className="text-[11px] font-bold text-black/70 italic flex-1">// {proj.desc}</p>
-                    <button onClick={() => handleProjectAction(proj)} className="w-full bg-black text-[#A8E6A0] text-[10px] font-black py-3 uppercase border-2 border-black hover:bg-pink-500 hover:text-white transition-all flex items-center justify-center gap-2">
-                      {proj.id === 2 ? "View Gallery" : proj.id === 3 ? "Download .Exe" : "Access Project"} 
-                      <ChevronRight size={14} />
-                    </button>
-                  </div>
-                </div>
+        {/* STATS SECTION - SLIDE FROM LEFT */}
+        <section className="pop-reveal reveal-left grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { label: "Engineering", val: "Full-stack", icon: <Code2 size={18}/>, color: "bg-blue-100 text-blue-600" },
+            { label: "Academic", val: "Graduating", icon: <Clock size={18}/>, color: "bg-yellow-100 text-yellow-700" },
+            { label: "Efficiency", val: "Optimized", icon: <Activity size={18}/>, color: "bg-green-100 text-green-700" },
+            { label: "Location", val: "Remote", icon: <MapPin size={18}/>, color: "bg-purple-100 text-purple-600" }
+          ].map((stat, i) => (
+            <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[20px] p-4 flex items-center gap-4 hover:shadow-[4px_4px_0px_0px_var(--card-shadow)] transition-all group">
+              <div className={`shrink-0 w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center border-2 border-[color:var(--card-border)]/10 group-hover:rotate-3 transition-transform`}>
+                {stat.icon}
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ACADEMIC LOG SECTION */}
-        <section id="edu" className="space-y-10 scroll-mt-32">
-          <div className="pop-reveal flex items-center gap-4">
-            <div className="flex items-center gap-3 bg-black text-white px-5 py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(236,72,153,1)]">
-              <Database size={18} className="text-pink-500" />
-              <h3 className="text-xl md:text-2xl font-black uppercase italic text-[#A8E6A0]">Academic_History</h3>
+              <div>
+                <span className="text-[9px] font-bold uppercase opacity-40 block">{stat.label}</span>
+                <h3 className="text-sm font-black tracking-tight text-[color:var(--text-color)]">{stat.val}</h3>
+              </div>
             </div>
-          </div>
-          {education.map((edu, idx) => (
-            <EducationCard key={idx} edu={edu} />
           ))}
+        </section>
+
+        {/* TECH STACK SECTION - POP REVEAL */}
+        <section id="stack" className="space-y-4">
+          {techSections.map((cat) => (
+            <div key={cat.key} className="card-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 space-y-6 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[color:var(--text-color)]">
+                  <span className={cat.color}>{cat.icon}</span> {cat.label}
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => scroll(cat.key, 'left')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full hover:bg-[color:var(--card-bg)] active:scale-90 transition-all"><ChevronLeft size={16}/></button>
+                  <button onClick={() => scroll(cat.key, 'right')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full bg-[#2B2B28] text-white active:scale-90 transition-all shadow-[2px_2px_0px_0px_#2B2B28]"><ChevronRight size={16}/></button>
+                </div>
+              </div>
+              <div ref={(el) => { scrollRefs.current[cat.key] = el; }} className="flex overflow-x-auto pb-6 gap-4 no-scrollbar scroll-smooth">
+                {cat.data.map((item: any) => (
+                  <div key={item.name} className="min-w-[140px] md:min-w-[160px]">
+                    <SkillCard item={item} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* PROJECTS SECTION - SLIDE FROM RIGHT */}
+        <section id="projects" className="pop-reveal reveal-right space-y-6">
+          <div className="flex items-center gap-4">
+            <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Projects</h2>
+            <div className="h-[2px] flex-1 bg-[color:var(--card-border)] opacity-10" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {projects.map((proj) => (
+              <div 
+                key={proj.id} 
+                className="group bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-4 flex flex-col hover:shadow-[8px_8px_0px_0px_var(--card-shadow)] transition-all cursor-pointer relative active:translate-x-1 active:translate-y-1 active:shadow-none" 
+                onClick={() => (proj.id === 2 ? setActivePage('derivifai') : proj.id === 3 ? (setSelectedProject(proj), setIsModalOpen(true)) : window.open(proj.url, '_blank'))}
+              >
+                <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-[9px] font-black uppercase px-3 py-1 rounded-full border-2 border-[color:var(--card-border)] shadow-[2px_2px_0px_0px_var(--card-shadow)] z-20 group-hover:-rotate-6 transition-transform">View_Project</div>
+                <div className="relative aspect-[16/10] rounded-[18px] overflow-hidden bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] mb-4 shrink-0">
+                  <img src={proj.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={proj.title} />
+                  <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="bg-[color:var(--card-bg)] p-3 rounded-full border-2 border-[color:var(--card-border)] shadow-[4px_4px_0px_0px_var(--card-shadow)] scale-90 group-hover:scale-100 transition-transform">
+                      <ArrowUpRight size={20} className="text-[color:var(--text-color)]" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex-1 flex flex-col space-y-3">
+                  <h4 className="font-black text-sm md:text-base uppercase tracking-tight group-hover:text-blue-600 transition-colors leading-none text-[color:var(--text-color)]">{proj.title}</h4>
+                  <div className="bg-[color:var(--card-bg)] border border-[color:var(--card-border)]/50 rounded-xl p-3 h-full">
+                    <p className="text-[11px] md:text-[12px] text-[color:var(--text-color)]/80 font-medium leading-relaxed text-justify">
+                      <span className="text-blue-600 font-black mr-1 text-[10px] opacity-50 group-hover:opacity-100 tracking-tighter">&gt; INFO:</span>
+                      {proj.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* EDUCATION SECTION - POP REVEAL */}
+        <section id="edu" className="pop-reveal space-y-6">
+          <div className="flex items-center gap-4">
+             <h2 className="text-xl font-black uppercase italic text-[color:var(--text-color)] text-left">Academic_History</h2>
+             <div className="h-0.5 flex-1 bg-[color:var(--card-border)] opacity-10" />
+          </div>
+          <div className="space-y-4">
+            {education.map((edu, idx) => (
+              <div key={edu.eduId || idx} className="card-reveal">
+                <EducationCard edu={edu} />
+              </div>
+            ))}
+          </div>
         </section>
       </main>
 
-      <DownloadModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        project={selectedProject || {}} 
-      />
-
-      <Footer /> 
+      <Footer />
+      <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={selectedProject || ({} as PortfolioProject)} />
       <ScrollToTop />
     </div>
   );

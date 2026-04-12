@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { Terminal, ChevronRight, ShieldCheck } from 'lucide-react';
+import { Terminal, ChevronRight, ShieldCheck, GraduationCap, Star, Milestone } from 'lucide-react';
 
 type Award = {
   id: string;
@@ -19,126 +19,138 @@ type EducationEntry = {
   awards?: Award[];
 };
 
-export default function EducationCard({ edu }: { edu: EducationEntry }) {
+export default function EducationCard({ edu, isLast }: { edu: EducationEntry; isLast?: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="pop-reveal max-w-4xl mx-auto mb-10 px-2 sm:px-0">
-      <div className="group bg-white border-2 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden transition-all hover:shadow-none hover:translate-x-1 hover:translate-y-1">
-        
-        {/* TOP BAR */}
-        <div className="bg-black text-[#A8E6A0] px-4 py-1.5 flex justify-between items-center border-b-2 border-black text-[9px] font-black uppercase tracking-widest">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-1.5 h-1.5 bg-pink-500 rounded-full animate-pulse" />
-            <span className="truncate">Academic_Credential</span>
-          </div>
-          <span className="hidden xs:block">Official_Record</span>
-        </div>
+    <div className="max-w-8xl mx-auto px-4 select-none relative pb-12">
+      
+      {/* TIMELINE TRACK - The Vertical Line */}
+      {!isLast && (
+        <div className="absolute left-[34px] md:left-[54px] top-20 bottom-0 w-0.5 border-l-2 border-dashed border-[#2B2B28]/10" />
+      )}
 
-        {/* CONTENT AREA */}
-        <div className="p-4 sm:p-6 md:p-8 flex flex-col sm:flex-row gap-6 md:gap-8 items-center sm:items-start text-center sm:text-left">
-          
-          {/* LOGO CONTAINER */}
-          <div className="shrink-0">
-            <div className="w-20 h-20 md:w-24 md:h-24 bg-[#FFFFED] border-2 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] transition-transform group-hover:rotate-2">
-              {edu.logo ? (
-                <img 
-                  src={edu.logo} 
-                  alt={edu.school} 
-                  className="w-full h-full p-2 object-contain" 
-                />
-              ) : (
-                <ShieldCheck size={40} className="text-black" />
-              )}
-            </div>
-          </div>
-
-          {/* TEXT AREA */}
-          <div className="flex-1 space-y-3 w-full">
-            <h4 className="text-xl md:text-3xl font-black uppercase tracking-tighter leading-tight group-hover:text-pink-600 transition-colors">
-              {edu.school === "BulSU" ? "Bulacan State University" : edu.school}
-            </h4>
-            
-            <div className="space-y-1">
-              <h5 className="text-xs sm:text-sm md:text-base font-black uppercase text-black/80">
-                {edu.degree}
-              </h5>
-              <p className="text-[10px] sm:text-[11px] font-bold opacity-60 italic">
-                // Timeline: {edu.year}
-              </p>
-            </div>
-
-            {/* PROGRESSION BAR */}
-            <div className="pt-4 border-t border-black/10">
-              <div className="flex justify-between items-end mb-2 text-[9px] font-black uppercase">
-                <span>Degree_Progression</span>
-                <span className="text-pink-600">
-                  {edu.progress && edu.progress < 100 ? `${edu.progress}% In Progress` : 'Degree Conferred'}
-                </span>
-              </div>
-              <div className="h-3 bg-black/5 border-2 border-black relative overflow-hidden">
-                <div 
-                  className="h-full bg-black transition-all duration-1000" 
-                  style={{ width: `${edu.progress ?? 100}%` }} 
-                />
-              </div>
-            </div>
-          </div>
+      {/* TIMELINE NODE - The Badge/Icon on the line */}
+      <div className="absolute left-[22px] md:left-[42px] top-6 z-10">
+        <div className="w-6 h-6 md:w-7 md:h-7 bg-[#facc15] border-2 border-[color:var(--card-border)] rounded-full flex items-center justify-center shadow-[2px_2px_0px_0px_var(--card-shadow)] group-hover:scale-110 transition-transform">
+          <Milestone size={12} className="text-[color:var(--text-color)]" />
         </div>
       </div>
 
-      {/* AWARDS SECTION */}
-      {edu.awards && edu.awards.length > 0 && (
-        <div className="mt-4 relative pl-4 sm:pl-8">
-          {/* Connector line */}
-          <div className="absolute left-0 -top-6 bottom-0 w-0.5 border-l-2 border-dashed border-black/20 ml-px" />
-
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full flex items-center justify-between bg-black text-[#A8E6A0] px-4 py-2.5 border-2 border-black shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
-          >
-            <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest flex items-center gap-3">
-              <ShieldCheck 
-                size={14} 
-                className={`transition-colors ${isExpanded ? "text-pink-500" : "text-[#A8E6A0]"}`} 
-              />
-              {isExpanded ? "Minimize_Achievements" : "Academic_Honors_&_Awards"}
-            </span>
-            <ChevronRight size={16} className={`transition-transform duration-300 ${isExpanded ? "rotate-90 text-pink-500" : ""}`} />
-          </button>
-
-          {isExpanded && (
-            <div className="mt-3 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
-              {edu.awards.map((award) => (
-                <div 
-                  key={award.id} 
-                  className="bg-white border-2 border-black p-3 sm:p-4 flex flex-col xs:flex-row items-start xs:items-center justify-between gap-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-[#FFFFED] transition-colors"
-                >
-                  <div className="flex flex-col text-left space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[8px] font-black bg-pink-500 text-white px-1.5 py-0.5 italic">
-                        {award.id}
-                      </span>
-                      <h5 className="text-[10px] sm:text-[11px] font-black uppercase text-black">
-                        {award.title}
-                      </h5>
-                    </div>
-                    <span className="text-[9px] font-bold opacity-50 uppercase flex items-center gap-1">
-                      <Terminal size={10} /> {award.issuer}
-                    </span>
-                  </div>
-                  
-                  <div className="shrink-0">
-                    <span className="inline-block text-[9px] font-black bg-black text-[#A8E6A0] px-2 py-1 italic shadow-[2px_2px_0px_0px_rgba(236,72,153,1)]">
-                      {award.date}
-                    </span>
-                  </div>
-                </div>
-              ))}
+      <div className="ml-10 md:ml-20">
+        {/* MAIN BENTO BOX */}
+        <div className="group bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] shadow-[6px_6px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all hover:shadow-[8px_8px_0px_0px_var(--card-shadow)]">
+          
+          {/* HEADER BAR */}
+          <div className="bg-[color:var(--card-bg)] px-5 py-3 flex justify-between items-center border-b-2 border-[color:var(--card-border)] text-[10px] font-black uppercase tracking-widest text-[color:var(--text-color)]/70">
+            <div className="flex items-center gap-2">
+              <GraduationCap size={14} className="text-blue-600" />
+              <span>Academic_Record</span>
             </div>
-          )}
+            <div className="flex items-center gap-1.5">
+               <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${edu.progress && edu.progress < 100 ? 'bg-blue-500' : 'bg-green-500'}`} />
+               <span className="text-blue-600">{edu.progress && edu.progress < 100 ? 'Active' : 'Verified'}</span>
+            </div>
+          </div>
+
+          {/* CONTENT */}
+          <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
+            
+            {/* LOGO STICKER */}
+            <div className="shrink-0 relative">
+              <div className="w-20 h-20 md:w-24 md:h-24 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] flex items-center justify-center shadow-[4px_4px_0px_0px_var(--card-shadow)] transition-transform group-hover:-rotate-3">
+                {edu.logo ? (
+                  <img 
+                    src={edu.logo} 
+                    alt={edu.school} 
+                    className="w-full h-full p-3 object-contain" 
+                  />
+                ) : (
+                  <ShieldCheck size={32} className="text-[color:var(--text-color)]" />
+                )}
+              </div>
+            </div>
+
+            {/* TEXT AREA */}
+            <div className="flex-1 space-y-4 w-full text-center md:text-left">
+              <div className="space-y-1">
+                <h4 className="text-xl md:text-3xl font-black uppercase tracking-tighter leading-tight text-[color:var(--text-color)]">
+                  {edu.school === "BulSU" ? "Bulacan State University" : edu.school}
+                </h4>
+                <p className="text-[11px] md:text-xs font-bold text-blue-600 uppercase tracking-widest">
+                  {edu.degree}
+                </p>
+              </div>
+              
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[color:var(--card-bg)] border border-[color:var(--card-border)]/10 rounded-full text-[9px] font-black text-[color:var(--text-color)]/70 uppercase tracking-tighter">
+                 Timeline // {edu.year}
+              </div>
+
+              {/* PROGRESSION BENTO */}
+              <div className="pt-4 border-t border-[color:var(--card-border)]/50">
+                <div className="flex justify-between items-end mb-2 text-[9px] font-black uppercase tracking-tight">
+                  <span className="opacity-40">Degree_Progression</span>
+                  <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-100">
+                    {edu.progress && edu.progress < 100 ? `${edu.progress}% Concluding` : 'Completed'}
+                  </span>
+                </div>
+                <div className="h-3 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-full relative overflow-hidden shadow-[2px_2px_0px_0px_var(--card-shadow)]">
+                  <div 
+                    className="h-full bg-blue-600 rounded-full border-r-2 border-[color:var(--card-border)] transition-all duration-1000" 
+                    style={{ width: `${edu.progress ?? 100}%` }} 
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* AWARDS COLLAPSIBLE */}
+        {edu.awards && edu.awards.length > 0 && (
+          <div className="mt-4 pl-4 md:pl-8">
+            <button 
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="w-full flex items-center justify-between bg-[color:var(--card-bg)] text-[color:var(--text-color)] px-4 py-3 border-2 border-[color:var(--card-border)] rounded-[20px] shadow-[4px_4px_0px_0px_#facc15] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+            >
+              <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest flex items-center gap-3">
+                <Star 
+                  size={14} 
+                  className={`transition-colors ${isExpanded ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`} 
+                />
+                {isExpanded ? "Hide_Achievements" : "Academic_Honors_&_Awards"}
+              </span>
+              <ChevronRight size={18} className={`transition-transform duration-300 ${isExpanded ? "rotate-90 text-blue-600" : "opacity-30"}`} />
+            </button>
+
+            {isExpanded && (
+              <div className="mt-4 space-y-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                {edu.awards.map((award) => (
+                  <div 
+                    key={award.id} 
+                    className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[4px_4px_0px_0px_#c2edc5] hover:bg-[color:var(--card-bg)] transition-colors"
+                  >
+                    <div className="flex flex-col space-y-1 text-left">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+                        <h5 className="text-[10px] md:text-[11px] font-black uppercase text-[color:var(--text-color)]">
+                          {award.title}
+                        </h5>
+                      </div>
+                      <span className="text-[8px] font-bold opacity-40 uppercase ml-4 flex items-center gap-1.5 text-[color:var(--text-color)]/75">
+                        <Terminal size={10} className="text-blue-600" /> {award.issuer}
+                      </span>
+                    </div>
+                    
+                    <div className="bg-[#2B2B28] text-white text-[8px] font-black px-2.5 py-1.5 rounded-lg uppercase italic tracking-widest shadow-[2px_2px_0px_0px_#facc15]">
+                      {award.date}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

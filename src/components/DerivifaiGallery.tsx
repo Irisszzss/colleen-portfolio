@@ -1,7 +1,9 @@
 "use client";
-import { ChevronLeft, ShieldAlert, PlayCircle, ArrowRight } from 'lucide-react';
+import { useLayoutEffect } from 'react'; 
+import { ChevronLeft, ShieldAlert, Layout, Video } from 'lucide-react';
+import ScrollToTop from './ScrollToTop';
 
-// --- IMAGE IMPORTS ---
+// --- IMAGE ASSET IMPORTS ---
 import deriv2 from '../assets/Projects/Derivifai/deriv2.png';
 import deriv3 from '../assets/Projects/Derivifai/deriv3.png';
 import deriv4 from '../assets/Projects/Derivifai/deriv4.png';
@@ -13,7 +15,7 @@ import deriv9 from '../assets/Projects/Derivifai/deriv9.png';
 import deriv10 from '../assets/Projects/Derivifai/deriv10.png';
 import deriv11 from '../assets/Projects/Derivifai/deriv11.png';
 
-// --- VIDEO IMPORTS ---
+// --- VIDEO ASSET IMPORTS ---
 import demo1 from '../assets/Projects/Derivifai/Deriv1vid.mp4';
 import demo2 from '../assets/Projects/Derivifai/Deriv2vid.mp4';
 
@@ -22,124 +24,88 @@ interface GalleryProps {
 }
 
 const DerivifaiGallery = ({ onBack }: GalleryProps) => {
+  // FIXED: Automatically scroll to top synchronously before the user sees the page
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const screenshots = [
-    { src: deriv2, alt: "Main Dashboard" },
-    { src: deriv3, alt: "Data Entry Screen" },
-    { src: deriv4, alt: "AI Analysis View" },
-    { src: deriv5, alt: "Market Scanner" },
-    { src: deriv6, alt: "User Settings" },
-    { src: deriv7, alt: "System Logs" },
-    { src: deriv8, alt: "Prediction Charts" },
-    { src: deriv9, alt: "Statistics Page" },
-    { src: deriv10, alt: "Algorithm Settings" },
-    { src: deriv11, alt: "Live Feed" },
+    { src: deriv2, alt: "Dashboard" }, { src: deriv3, alt: "Entry" },
+    { src: deriv4, alt: "AI View" }, { src: deriv5, alt: "Scanner" },
+    { src: deriv6, alt: "Settings" }, { src: deriv7, alt: "Logs" },
+    { src: deriv8, alt: "Charts" }, { src: deriv9, alt: "Stats" },
+    { src: deriv10, alt: "Algo" }, { src: deriv11, alt: "Feed" },
   ];
 
   const videos = [
-    { src: demo1, label: "AI in Action Demo" },
-    { src: demo2, label: "OpenAI Data Processing" },
+    { src: demo1, label: "AI Demo" },
+    { src: demo2, label: "Data Proc" },
   ];
 
   return (
-    <div className="min-h-screen bg-[#A8E6A0] p-4 sm:p-8 font-mono text-[#1D3D2A] relative overflow-x-hidden">
-      {/* Background CRT Effect */}
-      <div className="fixed inset-0 pointer-events-none z-40 opacity-[0.05] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,118,0.02))] bg-[length:100%_4px,4px_100%]" />
-
-      {/* Navigation */}
-      <nav className="max-w-6xl mx-auto mb-8 pt-4 relative z-50">
+    <div className="min-h-screen bg-[color:var(--bg-color)] p-6 sm:p-10 font-poppins text-[color:var(--text-color)] selection:bg-[#2B2B28] selection:text-white">
+      
+      {/* SIMPLE BACK BUTTON */}
+      <nav className="max-w-6xl mx-auto mb-8">
         <button 
           onClick={onBack} 
-          className="bg-black text-[#A8E6A0] px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none hover:bg-pink-500 hover:text-white transition-all flex items-center gap-2 uppercase font-black text-xs"
+          className="bg-[color:var(--card-bg)] text-[color:var(--text-color)] px-5 py-2.5 border-2 border-[color:var(--card-border)] rounded-xl shadow-[4px_4px_0px_0px_var(--card-shadow)] hover:bg-yellow-400 dark:hover:bg-purple-600 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2 uppercase font-black text-[10px] tracking-widest"
         >
           <ChevronLeft size={16} /> Back
         </button>
       </nav>
 
-      {/* Header */}
-      <header className="max-w-6xl mx-auto mb-12 relative z-10">
-        <div className="bg-white border-4 border-black p-6 md:p-10 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-          <div className="flex items-center gap-2 mb-4 text-slate-400 font-black uppercase text-[10px] tracking-widest">
-            <ShieldAlert size={14} className="text-pink-600" /> 
-            Project Archive // Derivifai
+      {/* HEADER BENTO */}
+      <header className="max-w-6xl mx-auto mb-12">
+        <div className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-8 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
+          <div className="flex items-center gap-2 mb-4 text-blue-600 dark:text-purple-400 font-black uppercase text-[9px] tracking-widest">
+            <ShieldAlert size={14} /> 
+            Project_Archive // Derivifai
           </div>
-          <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4">Derivifai</h1>
-          <div className="h-2 w-32 bg-pink-500 mb-6" />
-          <p className="text-sm md:text-lg font-bold text-slate-700 italic border-l-2 md:border-l-4 border-black pl-3 md:pl-4">
-            This project used the OpenAI API to help users understand complex trading data. 
-            Since the website is no longer live, this page shows how the AI analyzed the market 
-            and how the app looked when it was running.
+          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-4 leading-none text-[color:var(--text-color)]">
+            Derivifai<span className="text-blue-600 dark:text-purple-500">.</span>
+          </h1>
+          <p className="text-xs md:text-sm font-medium text-[color:var(--text-color)]/80 italic border-l-4 border-yellow-400 pl-4 max-w-2xl">
+            OpenAI-powered market analysis tool. Website inactive; gallery serves as interface documentation.
           </p>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto relative z-10 space-y-16">
+      <main className="max-w-6xl mx-auto space-y-12">
         
-        {/* VIDEO SECTION */}
+        {/* VIDEOS */}
         <section className="space-y-6">
-          <div className="flex items-center gap-4">
-            <div className="bg-black text-[#A8E6A0] px-3 py-1 font-black uppercase text-sm italic shadow-[3px_3px_0px_0px_rgba(236,72,153,1)]">
-              Demos
-            </div>
-            <div className="h-[1px] bg-black flex-1 opacity-20" />
+          <div className="flex items-center gap-3 text-blue-600 dark:text-purple-400 font-black uppercase text-[10px] tracking-widest">
+            <Video size={16} /> Video_Artifacts
           </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {videos.map((vid, index) => (
-              <div key={index} className="bg-black border-4 border-black p-2 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-                <div className="bg-pink-600 text-[10px] text-white px-2 py-1 flex justify-between font-black mb-2 uppercase">
-                  <span><PlayCircle size={12} className="inline mr-1" /> Clip {index + 1}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {videos.map((vid, i) => (
+              <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-2 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
+                <div className="rounded-[18px] overflow-hidden border-2 border-[color:var(--card-border)] aspect-video bg-black">
+                  <video controls className="w-full h-full"><source src={vid.src} type="video/mp4" /></video>
                 </div>
-                <video controls className="w-full aspect-video bg-slate-900">
-                  <source src={vid.src} type="video/mp4" />
-                </video>
               </div>
             ))}
           </div>
         </section>
 
-        {/* SCREENSHOT SECTION - Mobile Carousel */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-1">
-                <div className="bg-black text-[#A8E6A0] px-3 py-1 font-black uppercase text-sm italic shadow-[3px_3px_0px_0px_rgba(236,72,153,1)]">
-                Gallery
-                </div>
-                <div className="h-[1px] bg-black flex-1 opacity-20" />
-            </div>
-            <div className="lg:hidden flex items-center gap-2 text-[10px] font-black uppercase animate-pulse">
-                Swipe <ArrowRight size={12} />
-            </div>
+        {/* SCREENSHOTS */}
+        <section className="space-y-6 pb-12">
+          <div className="flex items-center gap-3 text-yellow-600 dark:text-yellow-400 font-black uppercase text-[10px] tracking-widest">
+            <Layout size={16} /> UI_Screenshots
           </div>
-
-          <div className="flex lg:grid lg:grid-cols-2 overflow-x-auto lg:overflow-visible gap-6 pb-8 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {screenshots.map((img, index) => (
-              <div 
-                key={index} 
-                className="min-w-[85%] sm:min-w-[60%] lg:min-w-full snap-center bg-black border-4 border-black p-2 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-              >
-                <div className="bg-[#1D3D2A] text-[10px] text-[#A8E6A0] px-2 py-1 flex justify-between border-b-2 border-black font-black mb-2 uppercase">
-                  <span>Img_{index + 1}</span>
-                </div>
-                {/* Changed aspect-square to aspect-video for landscape layout */}
-                <div className="aspect-video overflow-hidden bg-slate-900">
-                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {screenshots.map((img, i) => (
+              <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-2 shadow-[6px_6px_0px_0px_var(--card-shadow)] group transition-all hover:-translate-y-1">
+                <div className="aspect-video rounded-[18px] overflow-hidden border-2 border-[color:var(--card-border)] bg-[color:var(--card-bg)]">
+                  <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
                 </div>
               </div>
             ))}
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="max-w-6xl mx-auto mt-20 pt-10 pb-20 relative z-10 border-t-4 border-black border-dotted text-center">
-        <div className="flex flex-wrap justify-center gap-3">
-          {['OpenAI', 'PHP', 'JS', 'CSS'].map((tech) => (
-            <span key={tech} className="px-4 py-2 bg-white border-2 border-black font-black uppercase text-xs shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </footer>
+      <ScrollToTop />
     </div>
   );
 };
