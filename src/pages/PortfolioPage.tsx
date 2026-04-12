@@ -89,9 +89,15 @@ export default function PortfolioPage() {
               <a href={profile.resumeUrl} target="_blank" className="flex items-center gap-2 bg-[#2B2B28] text-white px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-blue-600 transition-all shadow-[4px_4px_0px_0px_#3b82f6] active:translate-x-1 active:translate-y-1 active:shadow-none">
                 <FileText size={14} /> Resume <ArrowUpRight size={12} />
               </a>
-              <button disabled className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] text-[color:var(--text-color)]/40 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-not-allowed transition-all grayscale opacity-60">
-                <Download size={14} /> CV
-              </button>
+
+              <div className="relative group/cv">
+                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#28292b] text-white text-[8px] font-black uppercase tracking-tighter rounded-md opacity-0 group-hover/cv:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-[3px_3px_0px_0px_#eab308] z-50">
+                  Compiling...
+                </div>
+                <button disabled className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] text-[color:var(--text-color)]/40 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-not-allowed transition-all grayscale opacity-60">
+                  <Download size={14} /> CV
+                </button>
+              </div>
             </div>
           </div>
 
