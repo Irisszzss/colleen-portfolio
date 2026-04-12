@@ -1,27 +1,30 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FileText, Database, Globe, ArrowUpRight, ChevronRight, ChevronLeft,
   Code2, Monitor, Download, ShieldCheck, Clock, MapPin, Activity 
 } from 'lucide-react';
 import { Navbar, Loader, ScrollToTop, SkillCard, Footer, EducationCard } from '../components'; 
 import { PORTFOLIO_DATA } from '../data/portfolio';
-import DerivifaiGallery from '../components/DerivifaiGallery'; 
 import DownloadModal from '../components/DownloadModal';
 
 type PortfolioProject = (typeof PORTFOLIO_DATA)['projects'][number];
 
 export default function PortfolioPage() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [activePage, setActivePage] = useState('home'); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
 
   const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { profile, languages, frameworks, developerTools, devOpsDeployment, projects, education } = PORTFOLIO_DATA;
 
+  // Handles Reveal Animations
   useEffect(() => {
+    if (loading) return;
+
     const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -35,7 +38,7 @@ export default function PortfolioPage() {
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [loading, activePage]); // Re-run when page changes or loading finishes
+  }, [loading]);
 
   const scroll = (key: string, direction: 'left' | 'right') => {
     const container = scrollRefs.current[key];
@@ -50,7 +53,6 @@ export default function PortfolioPage() {
   }, []);
 
   if (loading) return <Loader />;
-  if (activePage === 'derivifai') return <DerivifaiGallery onBack={() => setActivePage('home')} />;
 
   const techSections = [
     { label: "Programming", data: languages, icon: <Code2 size={14}/>, color: "text-blue-500", key: "lang" },
@@ -65,7 +67,7 @@ export default function PortfolioPage() {
 
       <main className="max-w-5xl mx-auto px-6 pt-20 space-y-10 overflow-x-hidden overflow-y-hidden mt-[30px]">
         
-        {/* HERO SECTION - REVEAL UP */}
+        {/* HERO SECTION */}
         <section id="about" className="scroll-mt-[200px] pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none" />
           
@@ -87,14 +89,9 @@ export default function PortfolioPage() {
               <a href={profile.resumeUrl} target="_blank" className="flex items-center gap-2 bg-[#2B2B28] text-white px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-blue-600 transition-all shadow-[4px_4px_0px_0px_#3b82f6] active:translate-x-1 active:translate-y-1 active:shadow-none">
                 <FileText size={14} /> Resume <ArrowUpRight size={12} />
               </a>
-              <div className="relative group/cv">
-                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#28292b] text-white text-[8px] font-black uppercase tracking-tighter rounded-md opacity-0 group-hover/cv:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-[3px_3px_0px_0px_#eab308] z-50">
-                  Compiling... 
-                </div>
-                <button disabled className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] text-[color:var(--text-color)]/40 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-not-allowed transition-all grayscale opacity-60">
-                  <Download size={14} /> CV
-                </button>
-              </div>
+              <button disabled className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] text-[color:var(--text-color)]/40 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-not-allowed transition-all grayscale opacity-60">
+                <Download size={14} /> CV
+              </button>
             </div>
           </div>
 
@@ -108,7 +105,7 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* STATS SECTION - SLIDE FROM LEFT */}
+        {/* STATS SECTION */}
         <section className="pop-reveal reveal-left grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: "Engineering", val: "Full-stack", icon: <Code2 size={18}/>, color: "bg-blue-100 text-blue-600" },
@@ -128,15 +125,13 @@ export default function PortfolioPage() {
           ))}
         </section>
 
-        {/* TECH STACK SECTION - POP REVEAL */}
+        {/* TECH STACK SECTION */}
         <section id="stack" className="scroll-mt-[130px] space-y-6">
-          {/* MAIN TECH STACK LABEL */}
           <div className="flex items-center gap-4">
-              <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Tech Stack</h2>
+            <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Tech Stack</h2>
             <div className="h-[2px] flex-1 bg-[color:var(--card-border)] opacity-10" />
           </div>
 
-          {/* CATEGORY CARDS */}
           <div className="space-y-4">
             {techSections.map((cat) => (
               <div key={cat.key} className="card-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 space-y-6 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
@@ -145,25 +140,12 @@ export default function PortfolioPage() {
                     <span className={cat.color}>{cat.icon}</span> {cat.label}
                   </div>
                   <div className="flex gap-2">
-                    <button 
-                      onClick={() => scroll(cat.key, 'left')} 
-                      className="p-2 border-2 border-[color:var(--card-border)] rounded-full hover:bg-[color:var(--card-bg)] active:scale-90 transition-all cursor-pointer"
-                    >
-                      <ChevronLeft size={16}/>
-                    </button>
-                    <button 
-                      onClick={() => scroll(cat.key, 'right')} 
-                      className="p-2 border-2 border-[color:var(--card-border)] rounded-full bg-[#2B2B28] text-white active:scale-90 transition-all shadow-[2px_2px_0px_0px_#2B2B28] cursor-pointer"
-                    >
-                      <ChevronRight size={16}/>
-                    </button>
+                    <button onClick={() => scroll(cat.key, 'left')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full hover:bg-[color:var(--card-bg)] active:scale-90 transition-all cursor-pointer"><ChevronLeft size={16}/></button>
+                    <button onClick={() => scroll(cat.key, 'right')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full bg-[#2B2B28] text-white active:scale-90 transition-all shadow-[2px_2px_0px_0px_#2B2B28] cursor-pointer"><ChevronRight size={16}/></button>
                   </div>
                 </div>
                 
-                <div 
-                  ref={(el) => { scrollRefs.current[cat.key] = el; }} 
-                  className="flex overflow-x-auto pb-6 gap-4 no-scrollbar scroll-smooth"
-                >
+                <div ref={(el) => { scrollRefs.current[cat.key] = el; }} className="flex overflow-x-auto pb-6 gap-4 no-scrollbar scroll-smooth">
                   {cat.data.map((item: any) => (
                     <div key={item.name} className="min-w-[140px] md:min-w-[160px]">
                       <SkillCard item={item} />
@@ -175,7 +157,7 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* PROJECTS SECTION - SLIDE FROM RIGHT */}
+        {/* PROJECTS SECTION */}
         <section id="projects" className="pop-reveal reveal-right space-y-6">
           <div className="flex items-center gap-4">
             <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Projects</h2>
@@ -187,7 +169,16 @@ export default function PortfolioPage() {
               <div 
                 key={proj.id} 
                 className="group bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-4 flex flex-col hover:shadow-[8px_8px_0px_0px_var(--card-shadow)] transition-all cursor-pointer relative active:translate-x-1 active:translate-y-1 active:shadow-none" 
-                onClick={() => (proj.id === 2 ? setActivePage('derivifai') : proj.id === 3 ? (setSelectedProject(proj), setIsModalOpen(true)) : window.open(proj.url, '_blank'))}
+                onClick={() => {
+                  if (proj.id === 2) {
+                    navigate('/derivifai');
+                  } else if (proj.id === 3) {
+                    setSelectedProject(proj);
+                    setIsModalOpen(true);
+                  } else {
+                    window.open(proj.url, '_blank');
+                  }
+                }}
               >
                 <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-[9px] font-black uppercase px-3 py-1 rounded-full border-2 border-[color:var(--card-border)] shadow-[2px_2px_0px_0px_var(--card-shadow)] z-20 group-hover:-rotate-6 transition-transform">View Project</div>
                 <div className="relative aspect-[16/10] rounded-[18px] overflow-hidden bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] mb-4 shrink-0">
@@ -212,7 +203,7 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* EDUCATION SECTION - POP REVEAL */}
+        {/* ACADEMIC SECTION */}
         <section id="edu" className="scroll-mt-[130px] pop-reveal space-y-6">
           <div className="flex items-center gap-4">
              <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Academic History</h2>
