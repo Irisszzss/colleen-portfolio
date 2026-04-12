@@ -98,7 +98,7 @@ export default function PortfolioPage() {
       <main className="max-w-5xl mx-auto space-y-24 md:space-y-32 relative z-10 pt-28 ">
         
         {/* PROFESSIONAL SUMMARY SECTION */}
-        <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-stretch scroll-mt-32">
+        <section id="about" className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 items-stretch scroll-mt-32 mt-10">
           {/* PROFILE CARD */}
           <div className="pop-reveal reveal-left order-1 md:col-span-8 bg-[#FFFFED] border-2 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex flex-col overflow-hidden">
             <div className="bg-black text-white px-4 py-2 flex justify-between items-center border-b-2 border-black">
