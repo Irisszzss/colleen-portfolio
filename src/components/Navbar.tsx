@@ -54,8 +54,10 @@ export default function Navbar() {
     
     if (elem) {
       setTimeout(() => {
+        const isMobile = window.innerWidth < 768;
+        const offset = isMobile ? 80 : 150; 
         const elementPosition = elem.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - 150;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
 
         window.scrollTo({
           top: offsetPosition,
