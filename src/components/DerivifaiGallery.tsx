@@ -1,6 +1,6 @@
 "use client";
 import { useLayoutEffect } from 'react'; 
-import { ChevronLeft, ShieldAlert, Layout, Video } from 'lucide-react';
+import { ChevronLeft, ShieldAlert, Layout, Video, Terminal, Cpu, Code2, Globe } from 'lucide-react';
 import ScrollToTop from './ScrollToTop';
 
 // --- IMAGE ASSET IMPORTS ---
@@ -24,10 +24,17 @@ interface GalleryProps {
 }
 
 const DerivifaiGallery = ({ onBack }: GalleryProps) => {
-  // FIXED: Automatically scroll to top synchronously before the user sees the page
+  // Automatically scroll to top synchronously before the user sees the page
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const techStack = [
+    { label: "Backend", tech: "PHP", icon: <Terminal size={14} /> },
+    { label: "AI Engine", tech: "OpenAI API", icon: <Cpu size={14} /> },
+    { label: "Frontend", tech: "HTML5 / CSS3", icon: <Globe size={14} /> },
+    { label: "Logic", tech: "JavaScript", icon: <Code2 size={14} /> },
+  ];
 
   const screenshots = [
     { src: deriv2, alt: "Dashboard" }, { src: deriv3, alt: "Entry" },
@@ -60,23 +67,40 @@ const DerivifaiGallery = ({ onBack }: GalleryProps) => {
         <div className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-8 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
           <div className="flex items-center gap-2 mb-4 text-blue-600 dark:text-purple-400 font-black uppercase text-[9px] tracking-widest">
             <ShieldAlert size={14} /> 
-            Project_Archive // Derivifai
+            Project Archive // Derivifai
           </div>
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-4 leading-none text-[color:var(--text-color)]">
             Derivifai<span className="text-blue-600 dark:text-purple-500">.</span>
           </h1>
           <p className="text-xs md:text-sm font-medium text-[color:var(--text-color)]/80 italic border-l-4 border-yellow-400 pl-4 max-w-2xl">
-            OpenAI-powered market analysis tool. Website inactive; gallery serves as interface documentation.
+            An OpenAI-powered calculus engine designed to automate the derivation process. Although the website is currently inactive, the project gallery serves as a functional archive, documenting the interface and the tool's ability to process complex mathematical expressions through natural language AI.
           </p>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto space-y-12">
         
+        {/* TECH STACK SECTION */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400 font-black uppercase text-[10px] tracking-widest">
+            <Code2 size={16} /> Tech Stack
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {techStack.map((item, i) => (
+              <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-2xl p-4 shadow-[4px_4px_0px_0px_var(--card-shadow)] flex flex-col gap-1 transition-transform hover:-translate-y-1">
+                <div className="flex items-center gap-2 text-blue-600 dark:text-purple-400 uppercase font-black text-[8px] tracking-tighter">
+                  {item.icon} {item.label}
+                </div>
+                <span className="text-xs md:text-sm font-bold uppercase truncate">{item.tech}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* VIDEOS */}
         <section className="space-y-6">
           <div className="flex items-center gap-3 text-blue-600 dark:text-purple-400 font-black uppercase text-[10px] tracking-widest">
-            <Video size={16} /> Video_Artifacts
+            <Video size={16} /> Videos
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {videos.map((vid, i) => (
@@ -92,7 +116,7 @@ const DerivifaiGallery = ({ onBack }: GalleryProps) => {
         {/* SCREENSHOTS */}
         <section className="space-y-6 pb-12">
           <div className="flex items-center gap-3 text-yellow-600 dark:text-yellow-400 font-black uppercase text-[10px] tracking-widest">
-            <Layout size={16} /> UI_Screenshots
+            <Layout size={16} /> UI Screenshots
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {screenshots.map((img, i) => (
