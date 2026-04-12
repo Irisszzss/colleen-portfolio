@@ -49,11 +49,9 @@
   --card-shadow: #7e22ce !important;
 }
 
-/* --- THE NUCLEAR FIX --- */
+/* --- THE NUCLEAR FIX: SCROLLBAR KILLER --- */
 html, 
-body, 
-#root, 
-#__next { 
+body { 
   background-color: var(--bg-color) !important;
   color: var(--text-color) !important;
   font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
@@ -61,13 +59,22 @@ body,
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  /* Prevent horizontal scrollbars during entrance animations */
-  overflow-x: hidden; 
+  
+  /* CRITICAL: Prevents horizontal scroll from animations */
+  overflow-x: hidden !important; 
+  /* Allows normal vertical scroll */
+  overflow-y: auto !important; 
+}
+
+/* Ensure Next.js/React root wrappers don't create secondary scrolls */
+#root, 
+#__next {
+  overflow: visible !important;
 }
 
 html {
   scroll-behavior: smooth; 
-  /* FIXED: Increased to 120px to ensure the Hero title isn't hidden by the Nav */
+  /* Standardized jump padding */
   scroll-padding-top: 120px; 
 }
 
@@ -76,7 +83,6 @@ body {
 }
 
 /* --- COMPONENT THEMES --- */
-
 .theme-card, .smart-card {
   background-color: var(--card-bg) !important;
   border-color: var(--card-border) !important;
@@ -105,7 +111,6 @@ body {
 }
 
 /* --- DARK MODE OVERRIDES --- */
-
 .dark .bg-white,
 .dark .bg-gray-50,
 .dark .bg-gray-100,
@@ -126,7 +131,6 @@ body {
 }
 
 /* --- UI HELPERS --- */
-
 ::selection {
   background-color: #7c3aed;
   color: white;
@@ -135,13 +139,11 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Force text inheritance */
 .smart-card h1, .smart-card h2, .smart-card h3, .smart-card h4, .smart-card p, .smart-card span {
   color: inherit !important;
 }
 
 /* --- ENHANCED REVEAL SYSTEM --- */
-
 .pop-reveal, 
 .card-reveal { 
   opacity: 0; 
@@ -152,7 +154,6 @@ body {
   filter: blur(10px); 
 }
 
-/* Offsets: Adjusted to 40px for a cleaner look that doesn't trigger scrollbars as easily */
 .reveal-left { transform: translateX(-40px); }
 .reveal-right { transform: translateX(40px); }
 
