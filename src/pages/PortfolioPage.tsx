@@ -63,7 +63,7 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-[color:var(--bg-color)] text-[color:var(--text-color)] font-poppins selection:bg-[#2B2B28] selection:text-white pb-10 text-left transition-colors duration-500">
       <Navbar />
 
-      <main className="max-w-5xl mx-auto px-6 pt-32 space-y-10 overflow-x-hidden overflow-y-hidden mt-[30px]">
+      <main className="max-w-5xl mx-auto px-6 pt-20 space-y-10 overflow-x-hidden overflow-y-hidden mt-[30px]">
         
         {/* HERO SECTION - REVEAL UP */}
         <section id="about" className="scroll-mt-[200px] pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
