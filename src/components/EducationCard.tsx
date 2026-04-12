@@ -45,7 +45,7 @@ export default function EducationCard({ edu, isLast }: { edu: EducationEntry; is
           <div className="bg-[color:var(--card-bg)] px-5 py-3 flex justify-between items-center border-b-2 border-[color:var(--card-border)] text-[10px] font-black uppercase tracking-widest text-[color:var(--text-color)]/70">
             <div className="flex items-center gap-2">
               <GraduationCap size={14} className="text-blue-600" />
-              <span>Academic_Record</span>
+              <span>Academic Record</span>
             </div>
             <div className="flex items-center gap-1.5">
                <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${edu.progress && edu.progress < 100 ? 'bg-blue-500' : 'bg-green-500'}`} />
@@ -117,7 +117,7 @@ export default function EducationCard({ edu, isLast }: { edu: EducationEntry; is
                   size={14} 
                   className={`transition-colors ${isExpanded ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`} 
                 />
-                {isExpanded ? "Hide_Achievements" : "Academic_Honors_&_Awards"}
+                {isExpanded ? "Hide Achievements" : "Academic Awards"}
               </span>
               <ChevronRight size={18} className={`transition-transform duration-300 ${isExpanded ? "rotate-90 text-blue-600" : "opacity-30"}`} />
             </button>

@@ -9,7 +9,7 @@ export const PORTFOLIO_DATA = {
   profile: {
     name: "Colleen Iris",
     lastName: "P. Jones",
-    title: "COLLEEN_IRIS_P_JONES.PROFILE",
+    title: "COLLEEN IRIS P JONES.PROFILE",
     bio: "Failures aren't roadblocks, they’re just part of the debugging process. It’s never about being better than everyone else. It’s just you vs. you, pushing to see how much further you can take your own potential.",
     avatar: CJ,
     lvl: "1",

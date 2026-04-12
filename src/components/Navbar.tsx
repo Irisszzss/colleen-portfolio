@@ -117,7 +117,7 @@ export default function Navbar() {
                   <div className={`w-2 h-2 rounded-full ${theme === 'dark' ? 'bg-purple-400 shadow-[0_0_8px_#a855f7]' : 'bg-blue-600 animate-pulse'}`} />
                   <span className="text-[8px] font-black uppercase text-[color:var(--text-color)]">Mode: {theme === 'dark' ? 'Night' : 'Day'}</span>
                </div>
-               <span className="text-[7px] font-bold opacity-40 uppercase tracking-tighter">System_Active</span>
+               <span className="text-[7px] font-bold opacity-40 uppercase tracking-tighter">System Active</span>
             </div>
           </div>
         </nav>
