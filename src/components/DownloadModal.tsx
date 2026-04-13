@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react'; // 1. Added useEffect
 import { X, Download, ShieldCheck, AlertCircle, FileText } from 'lucide-react';
 
 interface Project {
@@ -14,10 +14,26 @@ interface DownloadModalProps {
 }
 
 const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project }) => {
+  
+  // 2. Added the "Hiding Logic" directly here
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('modal-active');
+    } else {
+      document.body.classList.remove('modal-active');
+    }
+
+    // Cleanup when the component is closed or the user leaves the page
+    return () => {
+      document.body.classList.remove('modal-active');
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-[#2B2B28]/40 backdrop-blur-sm font-poppins">
+    /* 3. Increased z-index to [999] to ensure it sits ABOVE the navbar */
+    <div className="fixed inset-0 z-[999] flex items-center justify-center p-5 bg-[#2B2B28]/60 backdrop-blur-sm font-poppins">
       <div className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] shadow-[8px_8px_0px_0px_var(--card-shadow)] rounded-[32px] max-w-sm w-full overflow-hidden animate-in fade-in zoom-in duration-300">
         
         {/* HEADER BAR */}

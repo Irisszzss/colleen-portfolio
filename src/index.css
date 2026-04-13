@@ -82,6 +82,17 @@ body {
   @apply antialiased;
 }
 
+/* 1. Hide the Navbar/Header when modal is active */
+body.modal-active nav, 
+body.modal-active header {
+  display: none !important;
+}
+
+/* 2. Prevent the background from scrolling while modal is open */
+body.modal-active {
+  overflow: hidden;
+}
+
 /* --- COMPONENT THEMES --- */
 .theme-card, .smart-card {
   background-color: var(--card-bg) !important;
