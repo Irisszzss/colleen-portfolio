@@ -14,7 +14,7 @@ export const PORTFOLIO_DATA = {
     avatar: CJ,
     lvl: "1",
     resumeUrl: '/Jones_Colleen_Resume.pdf',
-    cvUrl: "#", 
+    cvUrl: "/Jones_Colleen_CV.pdf", 
     briefing: "Welcome to my digital portfolio. Here, you'll find a curated selection of my projects, skills, and educational background. Each section is designed to provide insight into my technical expertise and creative approach to software development. Feel free to explore and connect with me for potential collaborations or opportunities.",
   },
   
