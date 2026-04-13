@@ -86,6 +86,7 @@ export default function PortfolioPage() {
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
+              {/* Resume Link */}
               <a 
                 href={profile.resumeUrl} 
                 target="_blank" 
@@ -95,10 +96,11 @@ export default function PortfolioPage() {
                 <FileText size={14} /> Resume <ArrowUpRight size={12} />
               </a>
 
+              {/* CV Link*/}
               <a 
                 href={profile.cvUrl} 
                 download 
-                className="flex items-center gap-2 bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] text-[color:var(--text-color)] px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[color:var(--card-border)] transition-all shadow-[4px_4px_0px_0px_#eab308] active:translate-x-1 active:translate-y-1 active:shadow-none"
+                className="flex items-center gap-2 bg-transparent border-2 border-[#eab308] text-[color:var(--text-color)] px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[#eab308] hover:text-black transition-all shadow-[4px_4px_0px_0px_#eab308] active:translate-x-1 active:translate-y-1 active:shadow-none"
               >
                 <Download size={14} /> CV
               </a>

@@ -1,6 +1,7 @@
 import smartStrokeImg from '../assets/Projects/SmartStroke.png';
 import dervifaiImg from '../assets/Projects/Derivifai.png';
 import RootToolImg from '../assets/Projects/RootTool.png';
+import CreativePortfolioImg from '../assets/Projects/CreativePortfolio.png';
 import CJ from '../assets/CJ.jpg';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
@@ -63,7 +64,6 @@ export const PORTFOLIO_DATA = {
     { name: "Render", slug: "render", color: "#000000", bg: "bg-white" },
   ], 
 
-  // Added techSections here for easier mapping in your component
   get techSections() {
     return [
       { label: "Programming", data: this.languages, icon: "Code2", color: "text-blue-500", key: "lang" },
@@ -96,6 +96,13 @@ export const PORTFOLIO_DATA = {
       url: "https://github.com/yourusername/roottool",
       downloadUrl: "/RootTool.exe",
       isDownloadable: true 
+    },
+    { 
+      id: 4, 
+      title: "Creative Portfolio", 
+      desc: "Just a neo-brutalism theme portfolio website built with React, Tailwind CSS, and TypeScript, showcasing my projects, skills, and educational background in a visually striking way.",
+      image: CreativePortfolioImg,
+      url: "https://colleenirisjones-creative.vercel.app/",
     },
   ],
 
