@@ -2,7 +2,8 @@ import smartStrokeImg from '../assets/Projects/SmartStroke.png';
 import dervifaiImg from '../assets/Projects/Derivifai.png';
 import RootToolImg from '../assets/Projects/RootTool.png';
 import CreativePortfolioImg from '../assets/Projects/CreativePortfolio.png';
-import CJ from '../assets/CJ.jpg';
+// import CJ from '../assets/CJ.jpg';
+import CJ1 from '../assets/CJ1.jpg';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
 
@@ -12,7 +13,7 @@ export const PORTFOLIO_DATA = {
     lastName: "P. Jones",
     title: "COLLEEN IRIS P JONES.PROFILE",
     bio: "Failures aren't roadblocks, they’re just part of the debugging process. It’s never about being better than everyone else. It’s just you vs. you, pushing to see how much further you can take your own potential.",
-    avatar: CJ,
+    avatar: CJ1,
     lvl: "1",
     resumeUrl: '/Jones_Colleen_Resume.pdf',
     cvUrl: "/Jones_Colleen_CV.pdf", 
