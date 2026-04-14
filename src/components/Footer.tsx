@@ -13,7 +13,7 @@ export default function Footer() {
     },
     { 
       name: "linkedin", 
-      href: "https://www.linkedin.com/in/colleen-iris-jones-b57018372/", 
+      href: "https://www.linkedin.com/in/colleenirisjones/", 
       label: "LinkedIn",
       color: "hover:bg-[#4ade80]", 
       text: "text-green-600",
