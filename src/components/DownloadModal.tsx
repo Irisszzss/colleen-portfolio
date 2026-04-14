@@ -17,23 +17,17 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
   
   useEffect(() => {
     if (isOpen) {
-      // Get current scroll position so we don't jump
-      const scrollY = window.scrollY;
+      // Calculate scrollbar width to prevent layout shift
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.setProperty('--scrollbar-gutter', `${scrollbarWidth}px`);
       
-      // LOCK SCROLL: Use only overflow to prevent the "jump to top" issue
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-      
-      // Optional: if your site still jumps, it's likely due to 'position: fixed' 
-      // which we have now removed from this logic.
+      document.body.classList.add('modal-active');
     } else {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
+      document.body.classList.remove('modal-active');
     }
 
     return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
+      document.body.classList.remove('modal-active');
     };
   }, [isOpen]);
 
@@ -41,14 +35,13 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
 
   return (
     <div 
-      className="fixed inset-0 z-[999] flex items-center justify-center p-5 bg-[#2B2B28]/60 backdrop-blur-sm font-poppins touch-none"
-      onClick={onClose} // Close when clicking backdrop
+      className="fixed inset-0 z-[999] flex items-center justify-center p-5 bg-[#2B2B28]/60 backdrop-blur-sm font-poppins"
+      onClick={onClose} 
     >
       <div 
         className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] shadow-[8px_8px_0px_0px_var(--card-shadow)] rounded-[32px] max-w-sm w-full overflow-hidden animate-in fade-in zoom-in duration-300"
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking modal content
+        onClick={(e) => e.stopPropagation()} 
       >
-        
         {/* HEADER BAR */}
         <div className="bg-[color:var(--card-bg)] px-6 py-4 flex justify-between items-center border-b-2 border-[color:var(--card-border)]">
           <div className="flex items-center gap-2 text-blue-600">
@@ -88,7 +81,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
                 System_Requirement
               </p>
               <p className="text-[9px] font-bold text-[color:var(--text-color)]/80 leading-tight">
-                This application requires **Java 17 or higher**. Please verify that your system is updated before opening the file.
+                This application requires **Java 17 or higher**.
               </p>
             </div>
           </div>

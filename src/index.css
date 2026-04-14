@@ -3,8 +3,6 @@
 
 @theme {
   --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
-
-  /* Tell Tailwind v4 to use the .dark class on the <html> element */
   --variant-dark: .dark &;
 
   --animate-scan: scan 2s linear infinite;
@@ -32,21 +30,21 @@
 
 /* --- THEME VARIABLE SYSTEM --- */
 :root {
-  --bg-color: #f3e8ff !important; 
-  --text-color: #2e1065 !important;
-  --stroke-color: #2B2B28 !important;
-  --card-bg: #ffffff !important;
-  --card-border: #2B2B28 !important;
-  --card-shadow: #2B2B28 !important;
+  --bg-color: #f3e8ff; 
+  --text-color: #2e1065;
+  --stroke-color: #2B2B28;
+  --card-bg: #ffffff;
+  --card-border: #2B2B28;
+  --card-shadow: #2B2B28;
 }
 
 .dark {
-  --bg-color: #0f071a !important; 
-  --text-color: #e9d5ff !important;
-  --stroke-color: #e9d5ff !important;
-  --card-bg: #1e1033 !important; 
-  --card-border: rgba(168, 85, 247, 0.3) !important;
-  --card-shadow: #7e22ce !important;
+  --bg-color: #0f071a; 
+  --text-color: #e9d5ff;
+  --stroke-color: #e9d5ff;
+  --card-bg: #1e1033; 
+  --card-border: rgba(168, 85, 247, 0.3);
+  --card-shadow: #7e22ce;
 }
 
 /* --- THE NUCLEAR FIX: SCROLLBAR KILLER --- */
@@ -54,19 +52,25 @@ html,
 body { 
   background-color: var(--bg-color) !important;
   color: var(--text-color) !important;
-  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-poppins);
   transition: background-color 0.5s ease, color 0.5s ease;
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  
-  /* CRITICAL: Prevents horizontal scroll from animations */
   overflow-x: hidden !important; 
   /* Allows normal vertical scroll */
   overflow-y: auto !important; 
 }
 
-/* Ensure Next.js/React root wrappers don't create secondary scrolls */
+/* FIXED: Removed height: 100vh. 
+   Using only overflow: hidden prevents the scroll without snapping the page to the top.
+*/
+html:has(body.modal-active),
+body.modal-active {
+  overflow: hidden !important;
+  /* padding-right: var(--scrollbar-gutter);  <- Add this if you handle layout shift in JS */
+}
+
 #root, 
 #__next {
   overflow: visible !important;
@@ -74,7 +78,6 @@ body {
 
 html {
   scroll-behavior: smooth; 
-  /* Standardized jump padding */
   scroll-padding-top: 120px; 
 }
 
@@ -82,15 +85,12 @@ body {
   @apply antialiased;
 }
 
-/* 1. Hide the Navbar/Header when modal is active */
+/* FIXED: Removed display: none. 
+   Your navbar will now stay visible when the modal is active.
+*/
 body.modal-active nav, 
 body.modal-active header {
-  display: none !important;
-}
-
-/* 2. Prevent the background from scrolling while modal is open */
-body.modal-active {
-  overflow: hidden;
+  pointer-events: none; /* Optional: prevents interacting with nav while modal is open */
 }
 
 /* --- COMPONENT THEMES --- */
@@ -116,28 +116,21 @@ body.modal-active {
 
 .glass-panel {
   background-color: var(--card-bg) !important;
-  backdrop-blur: 12px;
+  backdrop-filter: blur(12px);
   border: 1px solid var(--card-border) !important;
   opacity: 0.9;
 }
 
 /* --- DARK MODE OVERRIDES --- */
-.dark .bg-white,
-.dark .bg-gray-50,
-.dark .bg-gray-100,
-.dark .bg-\[\#f8fafc\],
-.dark .bg-\[\#c2edc5\],
-.dark .bg-\[\#FFFFED\] {
+.dark :is(.bg-white, .bg-gray-50, .bg-gray-100, .bg-\[#f8fafc\], .bg-\[#c2edc5\], .bg-\[#FFFFED\]) {
   background-color: var(--card-bg) !important;
 }
 
-.dark .border-\[\#2B2B28\],
-.dark .border-\[\#f8fafc\] {
+.dark :is(.border-\[#2B2B28\], .border-\[#f8fafc\]) {
   border-color: var(--card-border) !important;
 }
 
-.dark .text-\[\#2B2B28\],
-.dark .text-\[\#4A4A48\] {
+.dark :is(.text-\[#2B2B28\], .text-\[#4A4A48\]) {
   color: var(--text-color) !important;
 }
 
@@ -150,7 +143,7 @@ body.modal-active {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-.smart-card h1, .smart-card h2, .smart-card h3, .smart-card h4, .smart-card p, .smart-card span {
+.smart-card :is(h1, h2, h3, h4, p, span) {
   color: inherit !important;
 }
 
@@ -177,4 +170,10 @@ body.modal-active {
   opacity: 1 !important; 
   transform: translate(0, 0) !important; 
   filter: blur(0px) !important;
+}
+
+/* Helper class for manual use */
+.no-scroll {
+  overflow: hidden !important;
+  touch-action: none;
 }
