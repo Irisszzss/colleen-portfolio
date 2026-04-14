@@ -15,7 +15,7 @@ export const PORTFOLIO_DATA = {
     bio: "Failures aren't roadblocks, they’re just part of the debugging process. It’s never about being better than everyone else. It’s just you vs. you, pushing to see how much further you can take your own potential.",
     avatar: CJ1,
     lvl: "1",
-    resumeUrl: '/Jones_Colleen_Resume_1.pdf',
+    resumeUrl: '/Jones_Colleen_Iris_Resume.pdf',
     cvUrl: "/Jones_Colleen_CV.pdf", 
     briefing: "Welcome to my digital portfolio. Here, you'll find a curated selection of my projects, skills, and educational background. Each section is designed to provide insight into my technical expertise and creative approach to software development. Feel free to explore and connect with me for potential collaborations or opportunities.",
   },
