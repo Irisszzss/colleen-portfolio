@@ -25,7 +25,7 @@ export default function EducationCard({ edu, isLast }: { edu: EducationEntry; is
   return (
     <div className="max-w-6xl mx-auto px-4 select-none relative pb-10">
       
-      {/* TIMELINE TRACK - Changed fixed color to variable opacity */}
+      {/* TIMELINE TRACK */}
       {!isLast && (
         <div className="absolute left-[34px] md:left-[54px] top-16 bottom-0 w-0.5 border-l-2 border-dashed border-[color:var(--text-color)]/10" />
       )}
@@ -127,7 +127,7 @@ export default function EducationCard({ edu, isLast }: { edu: EducationEntry; is
                 {edu.awards.map((award) => (
                   <div 
                     key={award.id} 
-                    className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[20px] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[3px_3px_0px_0px_#c2edc5]/50 hover:border-green-400 transition-colors"
+                    className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[20px] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[3px_3px_0px_0px_#c2edc5]/50 hover:border-green-400 transition-all"
                   >
                     <div className="flex flex-col space-y-1.5 text-left">
                       <div className="flex items-center gap-2.5">
@@ -141,8 +141,8 @@ export default function EducationCard({ edu, isLast }: { edu: EducationEntry; is
                       </span>
                     </div>
                     
-                    {/* Date Badge - Adaptive for Dark Mode */}
-                    <div className="bg-[color:var(--card-border)] dark:bg-[color:var(--text-color)]/10 text-[color:var(--text-color)] dark:text-white text-[9px] md:text-[10px] font-black px-3 py-1.5 rounded-lg uppercase italic tracking-wider shadow-[1.5px_1.5px_0px_0px_#facc15] whitespace-nowrap">
+                    {/* FIXED: White background in light mode, Dark in dark mode */}
+                    <div className="bg-[color:var(--card-bg)] text-[color:var(--text-color)] border-2 border-[color:var(--card-border)] text-[9px] md:text-[10px] font-black px-3 py-1.5 rounded-lg uppercase italic tracking-wider shadow-[1.5px_1.5px_0px_0px_#facc15] whitespace-nowrap">
                       {award.date}
                     </div>
                   </div>

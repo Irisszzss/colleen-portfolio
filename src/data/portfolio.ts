@@ -130,18 +130,78 @@ export const PORTFOLIO_DATA = {
       eduId: "SFAMS-STEM-2016",
       progress: 100, // Completed
       awards: [
-        { id: "AW-06", title: "SHS - With Honors", issuer: "SFAMS", date: "May 2022" },
-        { id: "AW-07", title: "SHS - Best Thesis Presenter", issuer: "SFAMS", date: "May 2022" },
-        { id: "AW-08", title: "JHS - With High Honors", issuer: "SFAMS", date: "March 2020" },
-        { id: "AW-09", title: "1st Runner Up, International Mental Arithmetic Competition", issuer: "ALOHA (Kuala Lumpur, Malaysia)", date: "2017" },
-        { id: "AW-10", title: "Champion, Mental Arithmetic Regional Level Competition", issuer: "ALOHA", date: "2017" },
-        { id: "AW-11", title: "1st Place, Scientific Writing (Filipino)", issuer: "National Scholastic, Civic and Creative Challenge", date: "Grade 7" },
-        { id: "AW-12", title: "3rd Place, Creative Scientific Writing (Filipino)", issuer: "National Battle of Math and Science Champions (NCST)", date: "2018" },
-        { id: "AW-13", title: "3rd Place, Creative Scientific Writing (Filipino)", issuer: "National Battle of Math and Science Champions (NCST)", date: "2019" },
-        { id: "AW-14", title: "4th Place, Science/Writing Category", issuer: "National Scholastic, Civic and Creative Challenge", date: "Grade 8" },
-        { id: "AW-16", title: "8th Place, Spelling Quiz Bee", issuer: "BulPriSa District Meet", date: "2018" },
-        { id: "AW-15", title: "6th Place, Physics Quiz Bee", issuer: "National Scholastic, Civic and Creative Challenge", date: "February 2017" },
-        { id: "AW-17", title: "National Competitor, Creative Scientific Writing (Filipino)", issuer: "National Battle of Math and Science Champions (NCST)", date: "February 2017" }
+        { 
+          id: "AW-06", 
+          title: "SHS - With Honors", 
+          issuer: "SFAMS", 
+          date: "May 2022" 
+        },
+        { 
+          id: "AW-07", 
+          title: "SHS - Best Thesis Presenter", 
+          issuer: "SFAMS", 
+          date: "May 2022" 
+        },
+        { 
+          id: "AW-08", 
+          title: "JHS - With High Honors", 
+          issuer: "SFAMS", 
+          date: "March 2020" 
+        },
+        { 
+          id: "AW-09", 
+          title: "3rd Place, Creative Scientific Writing (Filipino)", 
+          issuer: "National Battle of Math and Science Champions (NCST)", 
+          date: "2019" 
+        },
+        { 
+          id: "AW-10", 
+          title: "3rd Place, Creative Scientific Writing (Filipino)", 
+          issuer: "National Battle of Math and Science Champions (NCST)", 
+          date: "2018" 
+        },
+        { 
+          id: "AW-11", 
+          title: "4th Place, Science/Writing Category (Grade 8)", 
+          issuer: "National Scholastic, Civic and Creative Challenge", 
+          date: "2018" 
+        },
+        { 
+          id: "AW-12", 
+          title: "8th Place, Spelling Quiz Bee", 
+          issuer: "BulPriSa District Meet", 
+          date: "2018" 
+        },
+        { 
+          id: "AW-13", 
+          title: "1st Runner Up, International Mental Arithmetic Competition", 
+          issuer: "ALOHA (Kuala Lumpur, Malaysia)", 
+          date: "2017" 
+        },
+        { 
+          id: "AW-14", 
+          title: "Champion, Mental Arithmetic Regional Level Competition", 
+          issuer: "ALOHA", 
+          date: "2017" 
+        },
+        { 
+          id: "AW-15", 
+          title: "1st Place, Scientific Writing (Filipino)", 
+          issuer: "National Scholastic, Civic and Creative Challenge", 
+          date: "February 2017" 
+        },
+        { 
+          id: "AW-16", 
+          title: "3rd Place, Creative Scientific Writing (Filipino)", 
+          issuer: "National Battle of Math and Science Champions (NCST)", 
+          date: "February 2017" 
+        },
+        { 
+          id: "AW-17", 
+          title: "6th Place, Physics Quiz Bee", 
+          issuer: "National Scholastic, Civic and Creative Challenge", 
+          date: "February 2017" 
+        }
       ]
   },
   ],

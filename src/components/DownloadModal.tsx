@@ -17,27 +17,43 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
   
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add('modal-active');
+      // Get current scroll position so we don't jump
+      const scrollY = window.scrollY;
+      
+      // LOCK SCROLL: Use only overflow to prevent the "jump to top" issue
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      
+      // Optional: if your site still jumps, it's likely due to 'position: fixed' 
+      // which we have now removed from this logic.
     } else {
-      document.body.classList.remove('modal-active');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.classList.remove('modal-active');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-5 bg-[#2B2B28]/60 backdrop-blur-sm font-poppins">
-      <div className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] shadow-[8px_8px_0px_0px_var(--card-shadow)] rounded-[32px] max-w-sm w-full overflow-hidden animate-in fade-in zoom-in duration-300">
+    <div 
+      className="fixed inset-0 z-[999] flex items-center justify-center p-5 bg-[#2B2B28]/60 backdrop-blur-sm font-poppins touch-none"
+      onClick={onClose} // Close when clicking backdrop
+    >
+      <div 
+        className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] shadow-[8px_8px_0px_0px_var(--card-shadow)] rounded-[32px] max-w-sm w-full overflow-hidden animate-in fade-in zoom-in duration-300"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking modal content
+      >
         
         {/* HEADER BAR */}
         <div className="bg-[color:var(--card-bg)] px-6 py-4 flex justify-between items-center border-b-2 border-[color:var(--card-border)]">
           <div className="flex items-center gap-2 text-blue-600">
             <ShieldCheck size={18} />
-            <span className="text-[10px] font-black uppercase tracking-widest text-[color:var(--text-color)]">Secure_Download</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-[color:var(--text-color)]">Secure Download</span>
           </div>
           <button 
             onClick={onClose} 
@@ -56,7 +72,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
             <div className="flex items-center gap-2">
                <FileText size={12} className="text-blue-600/50" />
                <span className="text-[9px] font-black uppercase tracking-widest italic text-[color:var(--text-color)]/40">
-                 Requesting_Access_Permission...
+                 Requesting Access Permission...
                </span>
             </div>
           </div>
@@ -65,7 +81,6 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
             "You are about to download a local copy of this file. Please ensure you have the necessary environment to run this application."
           </p>
           
-          {/* WARNING BOX - Fixed for Dark Mode */}
           <div className="bg-yellow-500/10 border-2 border-yellow-500/20 p-4 rounded-2xl flex gap-3 items-start shadow-[4px_4px_0px_0px_#facc15]">
             <AlertCircle className="text-yellow-500 shrink-0" size={20} />
             <div className="space-y-1">
@@ -94,7 +109,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, project 
               onClick={onClose}
               className="w-full text-[10px] font-black uppercase text-[color:var(--text-color)]/40 hover:text-blue-600 hover:opacity-100 transition-all"
             >
-              [ Cancel_Request ]
+              [ Cancel Request ]
             </button>
           </div>
         </div>
