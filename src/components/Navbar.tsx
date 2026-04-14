@@ -120,10 +120,24 @@ export default function Navbar() {
           <div className="flex items-center gap-4 px-5 bg-transparent border-l-2 border-[color:var(--card-border)] h-full">
             <button
               onClick={toggleTheme}
-              className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-500 cursor-pointer ${theme === 'dark' ? 'bg-purple-600 border-purple-400 shadow-[0px_0px_15px_rgba(168,85,247,0.6)]' : 'bg-white border-[#2B2B28] shadow-[4px_4px_0px_0px_#2B2B28] hover:translate-x-1 hover:translate-y-1 hover:shadow-none'}`}
+              className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-500 cursor-pointer ${
+                theme === 'dark' 
+                  ? 'bg-purple-600 border-purple-400 shadow-[0px_0px_15px_rgba(168,85,247,0.6)]' 
+                  : 'bg-white border-[#2B2B28] shadow-[4px_4px_0px_0px_#2B2B28] hover:translate-x-1 hover:translate-y-1 hover:shadow-none'
+              }`}
             >
               <Cat size={22} className={theme === 'dark' ? "text-white fill-purple-700" : "text-[#2B2B28] fill-yellow-400/70"} />
             </button>
+
+            <div className="hidden lg:flex flex-col items-start justify-center">
+              <div className="flex items-center gap-1.5">
+                <div className={`w-2 h-2 rounded-full ${theme === 'dark' ? 'bg-purple-400 shadow-[0_0_8px_#a855f7]' : 'bg-blue-600 animate-pulse'}`} />
+                <span className="text-[8px] font-black uppercase text-[color:var(--text-color)]">
+                  Mode: {theme === 'dark' ? 'Night' : 'Day'}
+                </span>
+              </div>
+              <span className="text-[7px] font-bold opacity-40 uppercase tracking-tighter">System Active</span>
+            </div>
           </div>
         </nav>
       </header>
