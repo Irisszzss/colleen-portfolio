@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import PortfolioPage from './pages/PortfolioPage';
-import DerivifaiGallery from './pages/DerivifaiGallery'; // Make sure this path is correct
+import DerivifaiGallery from './pages/DerivifaiGallery'; 
+import RootToolGallery from './pages/RootToolGallery'; // 1. Import the new gallery
 
 function App() {
   return (
@@ -12,9 +13,12 @@ function App() {
 
           {/* Dedicated Page for Derivifai Gallery */}
           <Route path="/derivifai" element={<DerivifaiGallery />} />
+
+          {/* 2. Dedicated Page for RootTool Gallery */}
+          <Route path="/roottool" element={<RootToolGallery />} />
           
-          {/* Optional: Catch-all route to redirect back home if URL is wrong */}
-          <Route path="*" element={<PortfolioPage />} />
+          {/* 3. Catch-all: Redirects to home instead of just rendering it */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>
