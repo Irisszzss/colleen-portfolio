@@ -8,7 +8,6 @@ export default function Navbar() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const observer = useRef<IntersectionObserver | null>(null);
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const savedTheme = typeof window !== 'undefined' ? window.localStorage.getItem('theme') : null;
