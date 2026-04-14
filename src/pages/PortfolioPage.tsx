@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   FileText, Database, Globe, ArrowUpRight, ChevronRight, ChevronLeft,
-  Code2, Monitor, Download, ShieldCheck, Clock, MapPin, Activity 
+  Code2, Monitor, Download, ShieldCheck, Clock, MapPin, Activity, Layout 
 } from 'lucide-react';
 import { Navbar, Loader, ScrollToTop, SkillCard, Footer, EducationCard } from '../components'; 
 import { PORTFOLIO_DATA } from '../data/portfolio';
-import DownloadModal from '../components/DownloadModal';
+
+const DownloadModal = lazy(() => import('../components/DownloadModal'));
 
 type PortfolioProject = (typeof PORTFOLIO_DATA)['projects'][number];
 
 export default function PortfolioPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
@@ -21,7 +23,6 @@ export default function PortfolioPage() {
   const scrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { profile, languages, frameworks, developerTools, devOpsDeployment, projects, education } = PORTFOLIO_DATA;
 
-  // Handles Reveal Animations
   useEffect(() => {
     if (loading) return;
 
@@ -52,6 +53,31 @@ export default function PortfolioPage() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      const hash = window.location.hash;
+      if (hash) {
+        const targetId = hash.replace('#', '');
+        setTimeout(() => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            const isMobile = window.innerWidth < 768;
+            const offset = isMobile ? 90 : 130; // Matches Navbar offset
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = element.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 150);
+      }
+    }
+  }, [loading, location.hash]);
+
   if (loading) return <Loader />;
 
   const techSections = [
@@ -67,8 +93,7 @@ export default function PortfolioPage() {
 
       <main className="max-w-5xl mx-auto px-6 pt-20 space-y-10 overflow-x-hidden overflow-y-hidden mt-[30px]">
         
-        {/* HERO SECTION */}
-        <section id="about" className="scroll-mt-[200px] pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
+        <section id="about" className="scroll-mt-[130px] pop-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10 shadow-[8px_8px_0px_0px_var(--card-shadow)] relative overflow-hidden transition-all select-none">
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/10 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none" />
           
           <div className="order-2 lg:order-1 lg:col-span-8 space-y-6 relative z-10 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -86,7 +111,6 @@ export default function PortfolioPage() {
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
-              {/* Resume Link */}
               <a 
                 href={profile.resumeUrl} 
                 target="_blank" 
@@ -96,7 +120,6 @@ export default function PortfolioPage() {
                 <FileText size={14} /> Resume <ArrowUpRight size={12} />
               </a>
 
-              {/* CV Link*/}
               <a 
                 href={profile.cvUrl} 
                 target="_blank" 
@@ -118,7 +141,6 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* STATS SECTION */}
         <section className="pop-reveal reveal-left grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { label: "Engineering", val: "Full-stack", icon: <Code2 size={18}/>, color: "bg-blue-100 text-blue-600" },
@@ -138,13 +160,11 @@ export default function PortfolioPage() {
           ))}
         </section>
 
-        {/* TECH STACK SECTION */}
         <section id="stack" className="scroll-mt-[130px] space-y-6">
           <div className="flex items-center gap-4">
             <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Tech Stack</h2>
             <div className="h-[2px] flex-1 bg-[color:var(--card-border)] opacity-10" />
           </div>
-
           <div className="space-y-4">
             {techSections.map((cat) => (
               <div key={cat.key} className="card-reveal bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[32px] p-6 space-y-6 shadow-[6px_6px_0px_0px_var(--card-shadow)]">
@@ -157,7 +177,6 @@ export default function PortfolioPage() {
                     <button onClick={() => scroll(cat.key, 'right')} className="p-2 border-2 border-[color:var(--card-border)] rounded-full bg-[#2B2B28] text-white active:scale-90 transition-all shadow-[2px_2px_0px_0px_#2B2B28] cursor-pointer"><ChevronRight size={16}/></button>
                   </div>
                 </div>
-                
                 <div ref={(el) => { scrollRefs.current[cat.key] = el; }} className="flex overflow-x-auto pb-6 gap-4 no-scrollbar scroll-smooth">
                   {cat.data.map((item: any) => (
                     <div key={item.name} className="min-w-[140px] md:min-w-[160px]">
@@ -170,38 +189,57 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* PROJECTS SECTION */}
-        <section id="projects" className="pop-reveal reveal-right space-y-6">
+        <section id="projects" className="scroll-mt-[130px] pop-reveal reveal-right space-y-6">
           <div className="flex items-center gap-4">
             <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Projects</h2>
             <div className="h-[2px] flex-1 bg-[color:var(--card-border)] opacity-10" />
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {projects.map((proj) => (
               <div 
                 key={proj.id} 
-                className="group bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-4 flex flex-col hover:shadow-[8px_8px_0px_0px_var(--card-shadow)] transition-all cursor-pointer relative active:translate-x-1 active:translate-y-1 active:shadow-none" 
+                className="group bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-4 flex flex-col hover:shadow-[8px_8px_0px_0px_var(--card-shadow)] transition-all relative active:translate-x-1 active:translate-y-1 active:shadow-none"
                 onClick={() => {
-                  if (proj.id === 2) {
-                    navigate('/derivifai');
-                  } else if (proj.id === 3) {
-                    setSelectedProject(proj);
-                    setIsModalOpen(true);
-                  } else {
+                  if (proj.id !== 2 && proj.id !== 3) {
                     window.open(proj.url, '_blank');
+                  } else if (proj.id === 2) {
+                    navigate('/derivifai');
                   }
                 }}
               >
-                <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-[9px] font-black uppercase px-3 py-1 rounded-full border-2 border-[color:var(--card-border)] shadow-[2px_2px_0px_0px_var(--card-shadow)] z-20 group-hover:-rotate-6 transition-transform">View Project</div>
+                <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-[9px] font-black uppercase px-3 py-1 rounded-full border-2 border-[color:var(--card-border)] shadow-[2px_2px_0px_0px_var(--card-shadow)] z-20 group-hover:-rotate-6 transition-transform">
+                  {proj.id === 3 ? 'Multi Action' : 'View Project'}
+                </div>
+
                 <div className="relative aspect-[16/10] rounded-[18px] overflow-hidden bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] mb-4 shrink-0">
-                  <img src={proj.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={proj.title} />
-                  <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="bg-[color:var(--card-bg)] p-3 rounded-full border-2 border-[color:var(--card-border)] shadow-[4px_4px_0px_0px_var(--card-shadow)] scale-90 group-hover:scale-100 transition-transform">
-                      <ArrowUpRight size={20} className="text-[color:var(--text-color)]" />
-                    </div>
+                  <img src={proj.image} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={proj.title} />
+                  
+                  <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3 p-4 z-30">
+                    {proj.id === 3 ? (
+                      <>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); navigate('/roottool'); }}
+                          className="w-full bg-yellow-400 text-black font-black py-2 rounded-lg border-2 border-black flex items-center justify-center gap-2 hover:scale-105 transition-transform text-[10px] uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                        >
+                          <Layout size={14} /> View Gallery
+                        </button>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setSelectedProject(proj); setIsModalOpen(true); }}
+                          className="w-full flex items-center justify-center gap-2 py-2 rounded-lg border-2 transition-all hover:scale-105 text-[10px] font-black uppercase
+                            bg-[#F5F5DC] text-black border-black shadow-[4px_4px_0px_0px_black]
+                            dark:bg-white dark:text-black dark:border-white dark:shadow-[4px_4px_0px_0px_white]"
+                        >
+                          <Download size={14} /> Download Tool
+                        </button>
+                      </>
+                    ) : (
+                      <div className="bg-[color:var(--card-bg)] p-3 rounded-full border-2 border-[color:var(--card-border)] shadow-[4px_4px_0px_0px_var(--card-shadow)] scale-90 group-hover:scale-100 transition-transform">
+                        <ArrowUpRight size={20} className="text-[color:var(--text-color)]" />
+                      </div>
+                    )}
                   </div>
                 </div>
+
                 <div className="flex-1 flex flex-col space-y-3">
                   <h4 className="font-black text-sm md:text-base uppercase tracking-tight group-hover:text-blue-600 transition-colors leading-none text-[color:var(--text-color)]">{proj.title}</h4>
                   <div className="bg-[color:var(--card-bg)] border border-[color:var(--card-border)]/50 rounded-xl p-3 h-full">
@@ -216,7 +254,6 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        {/* ACADEMIC SECTION */}
         <section id="edu" className="scroll-mt-[130px] pop-reveal space-y-6">
           <div className="flex items-center gap-4">
              <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Academic History</h2>
@@ -233,7 +270,11 @@ export default function PortfolioPage() {
       </main>
 
       <Footer />
-      <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={selectedProject || ({} as PortfolioProject)} />
+      <Suspense fallback={null}>
+        {isModalOpen && (
+          <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={selectedProject || ({} as PortfolioProject)} />
+        )}
+      </Suspense>
       <ScrollToTop />
     </div>
   );

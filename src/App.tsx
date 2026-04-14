@@ -1,25 +1,22 @@
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import PortfolioPage from './pages/PortfolioPage';
-import DerivifaiGallery from './pages/DerivifaiGallery'; 
-import RootToolGallery from './pages/RootToolGallery'; // 1. Import the new gallery
+
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const DerivifaiGallery = lazy(() => import('./pages/DerivifaiGallery'));
+const RootToolGallery = lazy(() => import('./pages/RootToolGallery'));
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
-          {/* Main Portfolio Landing Page */}
-          <Route path="/" element={<PortfolioPage />} />
-
-          {/* Dedicated Page for Derivifai Gallery */}
-          <Route path="/derivifai" element={<DerivifaiGallery />} />
-
-          {/* 2. Dedicated Page for RootTool Gallery */}
-          <Route path="/roottool" element={<RootToolGallery />} />
-          
-          {/* 3. Catch-all: Redirects to home instead of just rendering it */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen bg-black" />}>
+          <Routes>
+            <Route path="/" element={<PortfolioPage />} />
+            <Route path="/derivifai" element={<DerivifaiGallery />} />
+            <Route path="/roottool" element={<RootToolGallery />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </div>
     </Router>
   );

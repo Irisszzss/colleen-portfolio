@@ -81,7 +81,7 @@ const DerivifaiGallery = () => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {techStack.map((item, i) => (
-                <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-2xl p-4 shadow-[4px_4px_0px_0px_var(--card-shadow)] flex flex-col gap-1 transition-transform hover:-translate-y-1">
+                <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-2xl p-4 shadow-[4px_4px_0px_0px_var(--card-shadow)] flex flex-col gap-1 transition-all duration-300 hover:-translate-y-1">
                   <div className="flex items-center gap-2 text-blue-600 dark:text-purple-400 uppercase font-black text-[8px] tracking-tighter">
                     {item.icon} {item.label}
                   </div>
@@ -112,9 +112,15 @@ const DerivifaiGallery = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {screenshots.map((img, i) => (
-                <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-2 shadow-[6px_6px_0px_0px_var(--card-shadow)] group transition-all hover:-translate-y-1">
-                  <div className="aspect-video rounded-[18px] overflow-hidden border-2 border-[color:var(--card-border)] bg-[color:var(--card-bg)]">
-                    <img src={img.src} alt={img.alt} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                <div key={i} className="group relative bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[24px] p-2 shadow-[6px_6px_0px_0px_var(--card-shadow)] transition-all duration-500 hover:-translate-y-2">
+                  <div className="relative rounded-[18px] overflow-hidden border-2 border-[color:var(--card-border)] bg-[#1a1a1a] flex items-center justify-center aspect-video">
+                    <img 
+                      src={img.src} 
+                      alt={img.alt} 
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105" 
+                    />
+                    <div className="absolute inset-0 bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   </div>
                 </div>
               ))}

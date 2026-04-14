@@ -1,11 +1,14 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Terminal, Cat, Sparkles } from 'lucide-react'; 
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const observer = useRef<IntersectionObserver | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedTheme = typeof window !== 'undefined' ? window.localStorage.getItem('theme') : null;
@@ -23,10 +26,10 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { label: 'Profile', href: '#about', id: 'about' },
-    { label: 'Stack', href: '#stack', id: 'stack' },
-    { label: 'Projects', href: '#projects', id: 'projects' },
-    { label: 'Academic', href: '#edu', id: 'edu' },
+    { label: 'Profile', href: '/#about', id: 'about' },
+    { label: 'Stack', href: '/#stack', id: 'stack' },
+    { label: 'Projects', href: '/#projects', id: 'projects' },
+    { label: 'Academic', href: '/#edu', id: 'edu' },
   ];
 
   useEffect(() => {
@@ -40,30 +43,41 @@ export default function Navbar() {
       },
       { rootMargin: '-10% 0px -40% 0px', threshold: 0.1 } 
     );
+    
     navItems.forEach((item) => {
-      const el = document.querySelector(item.href);
+      const targetId = item.href.replace('/#', '');
+      const el = document.getElementById(targetId);
       if (el) observer.current?.observe(el);
     });
+    
     return () => observer.current?.disconnect();
-  }, []);
+  }, [location.pathname]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const targetId = href.replace('/#', '');
+    const isHomePage = location.pathname === '/';
+
+    if (!isHomePage) {
+      // If not on home, let the Link navigate naturally
+      return; 
+    }
+
     e.preventDefault();
-    const targetId = href.replace('#', '');
     const elem = document.getElementById(targetId);
     
     if (elem) {
-      setTimeout(() => {
-        const isMobile = window.innerWidth < 768;
-        const offset = isMobile ? 80 : 150; 
-        const elementPosition = elem.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const isMobile = window.innerWidth < 768;
+      const offset = isMobile ? 90 : 130; 
+      const elementPosition = elem.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }, 10);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Update URL without reload
+      window.history.pushState(null, '', href);
     }
   };
 
@@ -99,7 +113,6 @@ export default function Navbar() {
                        <Sparkles size={10} className="text-yellow-300 animate-pulse" />
                     </div>
                   )}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-white/20 transition-opacity" />
                 </a>
               );
             })}
@@ -110,19 +123,13 @@ export default function Navbar() {
               onClick={toggleTheme}
               className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-500 cursor-pointer ${theme === 'dark' ? 'bg-purple-600 border-purple-400 shadow-[0px_0px_15px_rgba(168,85,247,0.6)]' : 'bg-white border-[#2B2B28] shadow-[4px_4px_0px_0px_#2B2B28] hover:translate-x-1 hover:translate-y-1 hover:shadow-none'}`}
             >
-              {theme === 'dark' ? <Cat size={22} strokeWidth={2} className="text-white fill-purple-700" /> : <Cat size={22} strokeWidth={2} className="text-[#2B2B28] fill-yellow-400/70" />}
+              <Cat size={22} className={theme === 'dark' ? "text-white fill-purple-700" : "text-[#2B2B28] fill-yellow-400/70"} />
             </button>
-            <div className="hidden lg:flex flex-col items-start justify-center">
-               <div className="flex items-center gap-1.5">
-                  <div className={`w-2 h-2 rounded-full ${theme === 'dark' ? 'bg-purple-400 shadow-[0_0_8px_#a855f7]' : 'bg-blue-600 animate-pulse'}`} />
-                  <span className="text-[8px] font-black uppercase text-[color:var(--text-color)]">Mode: {theme === 'dark' ? 'Night' : 'Day'}</span>
-               </div>
-               <span className="text-[7px] font-bold opacity-40 uppercase tracking-tighter">System Active</span>
-            </div>
           </div>
         </nav>
       </header>
 
+      {/* Mobile Nav */}
       <div className="fixed bottom-6 left-0 w-full z-[150] px-6 md:hidden pointer-events-none">
         <nav className="max-w-sm mx-auto flex bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] p-1 rounded-2xl shadow-[6px_6px_0px_0px_var(--card-shadow)] pointer-events-auto overflow-hidden">
           {navItems.map((item) => {
