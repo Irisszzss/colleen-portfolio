@@ -85,7 +85,7 @@ export const PORTFOLIO_DATA = {
     { 
       id: 2, 
       title: "Derivifai", 
-      desc: "An automated engine that utilizes a specialized API to solve and interpret complex derivative differential equations, built using HTML, CSS, and PHP.",
+      desc: "An OpenAI-powered calculus engine built with PHP and JavaScript. While the site is inactive, this gallery documents the UI and the tool's ability to solve complex derivatives using AI.",
       image: dervifaiImg,
       url: "https://derivifai.app"
     },
