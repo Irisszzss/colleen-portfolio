@@ -6,7 +6,7 @@ import {
   FileText, Database, Globe, ArrowUpRight, ChevronRight, ChevronLeft,
   Code2, Monitor, Download, ShieldCheck, Clock, MapPin, Activity, Layout 
 } from 'lucide-react';
-import { Navbar, Loader, ScrollToTop, SkillCard, Footer, EducationCard } from '../components'; 
+import { Loader, SkillCard, EducationCard } from '../components'; 
 import { PORTFOLIO_DATA } from '../data/portfolio';
 
 const DownloadModal = lazy(() => import('../components/DownloadModal'));
@@ -89,7 +89,6 @@ export default function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-[color:var(--bg-color)] text-[color:var(--text-color)] font-poppins selection:bg-[#2B2B28] selection:text-white pb-10 text-left transition-colors duration-500">
-      <Navbar />
 
       <main className="max-w-5xl mx-auto px-6 pt-20 space-y-10 overflow-x-hidden overflow-y-hidden mt-[30px]">
         
@@ -269,13 +268,11 @@ export default function PortfolioPage() {
         </section>
       </main>
 
-      <Footer />
       <Suspense fallback={null}>
         {isModalOpen && (
           <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} project={selectedProject || ({} as PortfolioProject)} />
         )}
       </Suspense>
-      <ScrollToTop />
     </div>
   );
 }

@@ -47,7 +47,7 @@ const DerivifaiGallery = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[color:var(--bg-color)] p-6 sm:p-10 font-poppins text-[color:var(--text-color)] selection:bg-[#2B2B28] selection:text-white">
+      <div className="min-h-screen bg-[color:var(--bg-color)] mt-10 p-6 sm:p-10 font-poppins text-[color:var(--text-color)] selection:bg-[#2B2B28] selection:text-white">
         
         <nav className="max-w-6xl mx-auto mb-8 mt-6">
           <button 

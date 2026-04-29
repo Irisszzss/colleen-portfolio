@@ -4,14 +4,14 @@ import { Cpu, Sparkles, Star, Heart } from 'lucide-react';
 
 export default function Loader() {
   const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState("Fetching_Magic");
+  const [status, setStatus] = useState("Fetching Magic");
 
   const cutesyStatuses = [
-    "Fetching_Magic",
-    "Polishing_Pixels",
-    "Loading_Vibes",
-    "Syncing_Colors",
-    "Finalizing_Sparkles"
+    "Fetching Magic",
+    "Polishing Pixels",
+    "Loading Vibes",
+    "Syncing Colors",
+    "Finalizing Sparkles"
   ];
 
   useEffect(() => {
