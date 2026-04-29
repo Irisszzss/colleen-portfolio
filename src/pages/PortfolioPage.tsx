@@ -62,7 +62,7 @@ export default function PortfolioPage() {
           const element = document.getElementById(targetId);
           if (element) {
             const isMobile = window.innerWidth < 768;
-            const offset = isMobile ? 90 : 130; // Matches Navbar offset
+            const offset = isMobile ? 90 : 130;
             const bodyRect = document.body.getBoundingClientRect().top;
             const elementRect = element.getBoundingClientRect().top;
             const elementPosition = elementRect - bodyRect;
@@ -140,20 +140,22 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        <section className="pop-reveal reveal-left grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <section className="pop-reveal grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { label: "Engineering", val: "Full-stack", icon: <Code2 size={18}/>, color: "bg-blue-100 text-blue-600" },
-            { label: "Academic", val: "Graduating", icon: <Clock size={18}/>, color: "bg-yellow-100 text-yellow-700" },
-            { label: "Efficiency", val: "Optimized", icon: <Activity size={18}/>, color: "bg-green-100 text-green-700" },
-            { label: "Location", val: "Remote", icon: <MapPin size={18}/>, color: "bg-purple-100 text-purple-600" }
+            { label: "Engineering", val: "Full-stack", icon: <Code2 size={16}/>, color: "text-blue-500" },
+            { label: "Academic", val: "Graduating", icon: <Clock size={16}/>, color: "text-yellow-500" },
+            { label: "Efficiency", val: "Optimized", icon: <Activity size={16}/>, color: "text-green-500" },
+            { label: "Location", val: "Remote", icon: <MapPin size={16}/>, color: "text-purple-500" }
           ].map((stat, i) => (
-            <div key={i} className="bg-[color:var(--card-bg)] border-2 border-[color:var(--card-border)] rounded-[20px] p-4 flex items-center gap-4 hover:shadow-[4px_4px_0px_0px_var(--card-shadow)] transition-all group">
-              <div className={`shrink-0 w-10 h-10 rounded-xl ${stat.color} flex items-center justify-center border-2 border-[color:var(--card-border)]/10 group-hover:rotate-3 transition-transform`}>
+            <div key={i} className="bg-[var(--card-bg)] border-[2.5px] border-[var(--card-border)] rounded-[20px] p-3 flex items-center gap-3 hover:shadow-[4px_4px_0px_0px_var(--card-shadow)] transition-all cursor-default group">
+              
+              <div className={`${stat.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
                 {stat.icon}
               </div>
-              <div>
-                <span className="text-[9px] font-bold uppercase opacity-40 block">{stat.label}</span>
-                <h3 className="text-sm font-black tracking-tight text-[color:var(--text-color)]">{stat.val}</h3>
+
+              <div className="leading-tight">
+                <span className="text-[8px] font-black uppercase opacity-40 block tracking-widest">{stat.label}</span>
+                <h3 className="text-[11px] font-black uppercase text-[var(--text-color)]">{stat.val}</h3>
               </div>
             </div>
           ))}

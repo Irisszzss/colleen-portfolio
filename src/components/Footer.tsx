@@ -11,11 +11,6 @@ export default function Footer() {
   return (
     <footer className="max-w-5xl mx-auto px-4 pb-20 select-none font-black">
       <div className="flex flex-col md:flex-row items-center justify-center md:justify-between border-[3px] border-[var(--card-border)] bg-[var(--card-bg)] shadow-[6px_6px_0px_0px_var(--card-shadow)] rounded-2xl md:rounded-full px-6 py-3 transition-all duration-500 gap-4">
-        
-        {/* Left Branding:
-            - HIDDEN ON MOBILE (hidden)
-            - VISIBLE ON DESKTOP (md:flex)
-        */}
         <div className="hidden md:flex items-center gap-3">
           <div className="p-2 bg-blue-600 border-2 border-black dark:border-white rounded-xl shadow-[3px_3px_0px_0px_var(--card-shadow)]">
             <Send size={16} className="text-white animate-bounce" />
@@ -28,10 +23,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Social Links:
-            - ALWAYS VISIBLE (flex)
-            - Centered on mobile, Right-aligned on desktop
-        */}
         <div className="flex items-center gap-3 md:gap-5">
           <a href="mailto:jonescolleeniris08@outlook.com" className="group">
              <div className="p-2 border-2 border-[var(--card-border)] rounded-lg transition-all hover:bg-blue-600 hover:shadow-[3px_3px_0px_0px_var(--card-shadow)] shadow-none">
