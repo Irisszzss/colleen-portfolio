@@ -7,7 +7,6 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const location = useLocation();
-  const observer = useRef<IntersectionObserver | null>(null);
 
   const navItems = [
     { label: 'Profile', href: '/#about', id: 'about' },
