@@ -6,8 +6,8 @@ import { Terminal, Moon, Sun } from 'lucide-react';
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('about');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const observer = useRef<IntersectionObserver | null>(null);
   const location = useLocation();
+  const observer = useRef<IntersectionObserver | null>(null);
 
   const navItems = [
     { label: 'Profile', href: '/#about', id: 'about' },
@@ -16,11 +16,10 @@ export default function Navbar() {
     { label: 'Academic', href: '/#edu', id: 'edu' },
   ];
 
-  // --- THEME LOGIC ---
+  // --- THEME ---
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    const initialTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     setTheme(initialTheme);
     document.documentElement.classList.toggle('dark', initialTheme === 'dark');
   }, []);
@@ -32,40 +31,43 @@ export default function Navbar() {
     document.documentElement.classList.toggle('dark', next === 'dark');
   };
 
-  // --- SCROLL TRACKING LOGIC ---
+  // --- SCROLL TRACKING (HIGH SENSITIVITY) ---
   useEffect(() => {
     if (location.pathname !== '/') return;
 
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 130;
+
+      for (const item of navItems) {
+        const element = document.getElementById(item.id);
+        if (element) {
+          const { top, bottom } = element.getBoundingClientRect();
+          const absoluteTop = top + window.scrollY;
+          const absoluteBottom = bottom + window.scrollY;
+
+          if (scrollPosition >= absoluteTop && scrollPosition < absoluteBottom) {
+            setActiveSection(item.id);
+            break; 
           }
-        });
-      },
-      { rootMargin: '-20% 0px -60% 0px', threshold: 0 } 
-    );
-    
-    navItems.forEach((item) => {
-      const el = document.getElementById(item.id);
-      if (el) observer.current?.observe(el);
-    });
-    
-    return () => observer.current?.disconnect();
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     const targetId = href.replace('/#', '');
-    const isHomePage = location.pathname === '/';
-
-    if (!isHomePage) return; 
+    if (location.pathname !== '/') return; 
 
     e.preventDefault();
     const elem = document.getElementById(targetId);
     
     if (elem) {
-      const offset = 110;
+      const offset = 100; 
       const elementPosition = elem.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -80,12 +82,10 @@ export default function Navbar() {
       <header className="fixed top-0 left-0 w-full z-[150] px-4 pt-4 pointer-events-none font-poppins">
         <nav className="max-w-5xl mx-auto flex justify-between items-center bg-[var(--card-bg)] border-[2.5px] border-[var(--card-border)] pointer-events-auto h-14 overflow-hidden shadow-[5px_5px_0px_0px_var(--card-shadow)] transition-all duration-300">
           
-          {/* Logo Section */}
           <div className="h-full px-5 flex items-center border-r-[2.5px] border-[var(--card-border)] bg-yellow-400 dark:bg-purple-600">
             <Terminal size={18} strokeWidth={3} className="text-black dark:text-white" />
           </div>
 
-          {/* Desktop Nav Items */}
           <div className="flex-1 h-full hidden md:flex items-stretch bg-neutral-100 dark:bg-neutral-800/30">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
@@ -108,7 +108,6 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Theme Toggle Button */}
           <button
             onClick={toggleTheme}
             className="h-full px-6 border-l-[2.5px] border-[var(--card-border)] flex items-center justify-center transition-colors hover:bg-pink-400 dark:hover:bg-pink-500 group"
@@ -121,7 +120,6 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile Nav */}
       <div className="fixed bottom-6 left-0 w-full z-[150] px-6 md:hidden">
         <nav className="max-w-xs mx-auto flex bg-[var(--card-bg)] border-[2.5px] border-[var(--card-border)] shadow-[5px_5px_0px_0px_var(--card-shadow)] overflow-hidden rounded-xl">
           {navItems.map((item) => {

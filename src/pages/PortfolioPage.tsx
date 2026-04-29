@@ -62,10 +62,11 @@ export default function PortfolioPage() {
           const element = document.getElementById(targetId);
           if (element) {
             const isMobile = window.innerWidth < 768;
-            const offset = isMobile ? 90 : 130;
-            const bodyRect = document.body.getBoundingClientRect().top;
-            const elementRect = element.getBoundingClientRect().top;
-            const elementPosition = elementRect - bodyRect;
+            // Set this to match your Navbar height exactly
+            const offset = isMobile ? 80 : 100; 
+
+            // Get absolute position relative to document
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition - offset;
 
             window.scrollTo({
@@ -255,12 +256,12 @@ export default function PortfolioPage() {
           </div>
         </section>
 
-        <section id="edu" className="scroll-mt-[130px] pop-reveal space-y-6">
+        <section id="edu" className="scroll-mt-[130px] pop-reveal space-y-6 pt-4">
           <div className="flex items-center gap-4">
              <h2 className="text-xl font-black uppercase italic border-b-2 border-yellow-400 w-fit pb-1 text-left">Academic History</h2>
              <div className="h-0.5 flex-1 bg-[color:var(--card-border)] opacity-10" />
           </div>
-          <div className="space-y-4">
+          <div className="space-y-1">
             {education.map((edu, idx) => (
               <div key={edu.eduId || idx} className="card-reveal">
                 <EducationCard edu={edu} />
