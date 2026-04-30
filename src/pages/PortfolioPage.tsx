@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   FileText, Database, Globe, ArrowUpRight, ChevronRight, ChevronLeft,
-  Code2, Monitor, Download, ShieldCheck, Clock, MapPin, Activity, Layout 
+  Code2, Monitor, Download, Sparkles, Clock, MapPin, Activity, Layout 
 } from 'lucide-react';
 import { Loader, SkillCard, EducationCard } from '../components'; 
 import { PORTFOLIO_DATA } from '../data/portfolio';
@@ -62,10 +62,8 @@ export default function PortfolioPage() {
           const element = document.getElementById(targetId);
           if (element) {
             const isMobile = window.innerWidth < 768;
-            // Set this to match your Navbar height exactly
             const offset = isMobile ? 80 : 100; 
 
-            // Get absolute position relative to document
             const elementPosition = element.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition - offset;
 
@@ -98,7 +96,7 @@ export default function PortfolioPage() {
           
           <div className="order-2 lg:order-1 lg:col-span-8 space-y-6 relative z-10 flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[color:var(--card-bg)] border border-blue-600 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest text-blue-600 shadow-[2px_2px_0px_0px_#2563eb]">
-              <ShieldCheck size={14} /> {profile.title}
+              <Sparkles size={14} /> {profile.title}
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[0.9] tracking-tighter uppercase text-[color:var(--text-color)]">

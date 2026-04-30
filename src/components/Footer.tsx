@@ -1,5 +1,5 @@
 "use client";
-import { Send, Sparkles, Mail } from 'lucide-react';
+import { Sparkles, Mail, Code2 } from 'lucide-react';
 
 export default function Footer() {
   const socialLinks = [
@@ -9,43 +9,75 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="max-w-5xl mx-auto px-4 pb-20 select-none font-black">
-      <div className="flex flex-col md:flex-row items-center justify-center md:justify-between border-[3px] border-[var(--card-border)] bg-[var(--card-bg)] shadow-[6px_6px_0px_0px_var(--card-shadow)] rounded-2xl md:rounded-full px-6 py-3 transition-all duration-500 gap-4">
-        <div className="hidden md:flex items-center gap-3">
-          <div className="p-2 bg-blue-600 border-2 border-black dark:border-white rounded-xl shadow-[3px_3px_0px_0px_var(--card-shadow)]">
-            <Send size={16} className="text-white animate-bounce" />
+    <footer className="w-full max-w-5xl mx-auto px-2 pb-10 select-none font-poppins">
+      <div 
+        style={{ 
+          backgroundColor: 'var(--card-bg)', 
+          borderColor: 'var(--card-border)',
+          boxShadow: '5px 5px 0px 0px var(--card-shadow)',
+          color: 'var(--text-color)'
+        }}
+        className="flex items-center border-[2.5px] rounded-full px-2.5 md:px-6 py-2.5 transition-all duration-500"
+      >
+        
+        {/* DESKTOP ONLY: Collaboration Section */}
+        <div className="hidden md:flex items-center gap-4 flex-1">
+          <div 
+            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}
+            className="p-2 border-[2px] rounded-xl shadow-[2px_2px_0px_0px_var(--card-shadow)]"
+          >
+            <Code2 size={18} strokeWidth={2.5} style={{ color: 'var(--text-color)' }} />
           </div>
-          <div className="flex flex-col">
-            <span className="text-[11px] uppercase tracking-tighter text-[var(--text-color)]">Colleen Jones</span>
-            <span className="text-[8px] uppercase opacity-50 flex items-center gap-1 tracking-widest text-[var(--text-color)]">
-              <Sparkles size={10} className="text-yellow-500" /> Collaboration
-            </span>
-          </div>
+          <span className="text-[12px] flex items-center gap-2 uppercase tracking-widest font-bold opacity-80">
+            <Sparkles size={14} className="text-yellow-500 fill-yellow-500/20" /> 
+            Let's connect and create something amazing together!
+          </span>
         </div>
 
-        <div className="flex items-center gap-3 md:gap-5">
-          <a href="mailto:jonescolleeniris08@outlook.com" className="group">
-             <div className="p-2 border-2 border-[var(--card-border)] rounded-lg transition-all hover:bg-blue-600 hover:shadow-[3px_3px_0px_0px_var(--card-shadow)] shadow-none">
-              <Mail size={18} className="text-[var(--text-color)] group-hover:text-white" />
+        {/* MOBILE & DESKTOP: Action Section */}
+        <div className="flex items-center justify-between w-full md:w-auto gap-2 md:gap-4">
+          
+          {/* THE BUTTON */}
+          <a href="mailto:jonescolleeniris08@outlook.com" className="block flex-none group">
+            <div 
+              style={{ borderColor: 'var(--card-border)' }}
+              className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-pink-400 text-white border-[2px] rounded-xl shadow-[3px_3px_0px_0px_var(--card-shadow)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all"
+            >
+              <Mail size={16} />
+              <span className="text-[10px] font-bold uppercase tracking-tight whitespace-nowrap">
+                Get in touch
+              </span>
             </div>
           </a>
 
-          {socialLinks.map((social) => (
-            <a key={social.name} href={social.href} target="_blank" className="group">
-              <div className={`p-2 border-2 border-[var(--card-border)] rounded-lg transition-all ${social.color} hover:shadow-[3px_3px_0px_0px_var(--card-shadow)] shadow-none`}>
-                <svg viewBox="0 0 24 24" className="w-[18px] h-[18px] transition-colors fill-[var(--text-color)] group-hover:fill-black">
-                  <path d={social.path} />
-                </svg>
-              </div>
-            </a>
-          ))}
+          {/* Social Icons */}
+          <div className="flex items-center gap-2">
+            {socialLinks.map((social) => (
+              <a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="block group">
+                <div 
+                  style={{ borderColor: 'var(--card-border)' }}
+                  className={`p-2 border-[2px] rounded-xl transition-all ${social.color} hover:shadow-[3px_3px_0px_0px_var(--card-shadow)]`}
+                >
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    style={{ fill: 'var(--text-color)' }}
+                    className="w-4 h-4 transition-colors group-hover:!fill-black"
+                  >
+                    <path d={social.path} />
+                  </svg>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Attribution */}
-      <div className="mt-4 flex justify-between items-center text-[9px] uppercase opacity-30 tracking-[0.2em] text-[var(--text-color)] px-4">
-        <span>Region III // PH</span>
-        <span>© {new Date().getFullYear()}</span>
+      {/* Bottom Text */}
+      <div 
+        style={{ color: 'var(--text-color)' }}
+        className="mt-6 flex justify-between items-center text-[8px] font-normal px-2 uppercase tracking-widest opacity-60 transition-colors duration-500"
+      >
+        <span>&copy; {new Date().getFullYear()} Colleen Iris P. Jones</span>
       </div>
     </footer>
   );
