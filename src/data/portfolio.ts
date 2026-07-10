@@ -3,7 +3,8 @@ import dervifaiImg from '../assets/Projects/Derivifai.png';
 import RootToolImg from '../assets/Projects/RootTool.png';
 import CreativePortfolioImg from '../assets/Projects/CreativePortfolio.png';
 // import CJ from '../assets/CJ.jpg';
-import CJ1 from '../assets/CJ1.jpg';
+//import CJ1 from '../assets/CJ1.jpg';
+import CJ2 from '../assets/CJ2.png';
 import BSULogo from '../assets/logo/bulsu-logo.jpg';
 import SFAMSLogo from '../assets/logo/sfams-logo.png';
 
@@ -13,7 +14,7 @@ export const PORTFOLIO_DATA = {
     lastName: "P. Jones",
     title: "About",
     bio: "Failures aren't roadblocks, they’re just part of the debugging process. It’s never about being better than everyone else. It’s just you vs. you, pushing to see how much further you can take your own potential.",
-    avatar: CJ1,
+    avatar: CJ2,
     lvl: "1",
     resumeUrl: '/Jones_Colleen_Iris_Resume.pdf',
     cvUrl: "/Jones_Colleen_CV.pdf", 
@@ -114,9 +115,9 @@ export const PORTFOLIO_DATA = {
       degree: "BS in Computer Engineering", 
       year: "2022 — 2026",
       eduId: "BSU-COE-2022",
-      progress: 90, // Updated progression
+      progress: 100, // Updated progression
       awards: [
-        { id: "AW-01", title: "Magna Cum Laude Candidate", issuer: "College of Engineering", date: "June 2026" },
+        { id: "AW-01", title: "Magna Cum Laude", issuer: "College of Engineering", date: "June 2026" },
         { id: "AW-02", title: "Dean's Lister", issuer: "College of Engineering", date: "2023-2026" },
         { id: "AW-03", title: "ICpEP R3 Logic Breadboarding Participant", issuer: "ICpEP.se Region III", date: "March 2026" },
         { id: "AW-04", title: "Huawei Innovation Track Participant", issuer: "Huawei ICT Academy", date: "Nov 2025" },

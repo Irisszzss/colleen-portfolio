@@ -142,7 +142,7 @@ export default function PortfolioPage() {
         <section className="pop-reveal grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
             { label: "Engineering", val: "Full-stack", icon: <Code2 size={16}/>, color: "text-blue-500" },
-            { label: "Academic", val: "Graduating", icon: <Clock size={16}/>, color: "text-yellow-500" },
+            { label: "Degree", val: "Computer Engineer", icon: <Clock size={16}/>, color: "text-yellow-500" },
             { label: "Efficiency", val: "Optimized", icon: <Activity size={16}/>, color: "text-green-500" },
             { label: "Location", val: "Remote", icon: <MapPin size={16}/>, color: "text-purple-500" }
           ].map((stat, i) => (
